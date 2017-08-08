@@ -177,7 +177,7 @@ PROCESS_THREAD(udp_server_process, ev, data)
   while(1) {
     PROCESS_YIELD();
     if(ev == tcpip_event) {
-      tcpip_handler();
+      //tcpip_handler();
     } else if (ev == sensors_event && data == &button_sensor) {
       PRINTF("Initiaing global repair\n");
       rpl_repair_root(RPL_DEFAULT_INSTANCE);

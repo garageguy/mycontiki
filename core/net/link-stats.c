@@ -163,6 +163,7 @@ link_stats_packet_sent(const linkaddr_t *lladdr, int status, int numtx)
   /* Compute EWMA and update ETX */
   stats->etx = ((uint32_t)stats->etx * (EWMA_SCALE - ewma_alpha) +
       (uint32_t)packet_etx * ewma_alpha) / EWMA_SCALE;
+
 }
 /*---------------------------------------------------------------------------*/
 /* Packet input callback. Updates statistics for receptions on a given link */

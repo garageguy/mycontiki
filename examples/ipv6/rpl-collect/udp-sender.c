@@ -40,6 +40,7 @@
 #endif
 #include "collect-common.h"
 #include "collect-view.h"
+#include "net/mac/csma.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -128,7 +129,13 @@ collect_common_send(void)
 
   /* Let's suppose we have only one instance */
   dag = rpl_get_any_dag();
-  if(dag != NULL) {
+  if (dag == NULL ) {
+    rtmetric = 0;
+    beacon_interval = 0;
+    num_neighbors = 0;
+	return;
+  } else {
+	  
     preferred_parent = dag->preferred_parent;
     if(preferred_parent != NULL) {
       uip_ds6_nbr_t *nbr;
@@ -143,12 +150,8 @@ collect_common_send(void)
     rtmetric = dag->rank;
     beacon_interval = (uint16_t) ((2L << dag->instance->dio_intcurrent) / 1000);
     num_neighbors = uip_ds6_nbr_num();
-  } else {
-    rtmetric = 0;
-    beacon_interval = 0;
-    num_neighbors = 0;
-  }
-
+  } 
+  
   /* num_neighbors = collect_neighbor_list_num(&tc.neighbor_list); */
   collect_view_construct_message(&msg.msg, &parent,
                                  parent_etx, rtmetric,
@@ -156,6 +159,8 @@ collect_common_send(void)
 
   uip_udp_packet_sendto(client_conn, &msg, sizeof(msg),
                         &server_ipaddr, UIP_HTONS(UDP_SERVER_PORT));
+  gg_num_udp_sent++;
+ 
 }
 /*---------------------------------------------------------------------------*/
 void

@@ -67,7 +67,7 @@
 #endif /* NETSTACK_CONF_MAC */
 #endif /* NETSTACK_MAC */
 
-#ifndef NETSTACK_RDC
+#ifndef NETSTACK_RDC 
 #ifdef NETSTACK_CONF_RDC
 #define NETSTACK_RDC NETSTACK_CONF_RDC
 #else /* NETSTACK_CONF_RDC */

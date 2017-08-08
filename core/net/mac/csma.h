@@ -44,6 +44,17 @@
 #include "net/mac/mac.h"
 #include "dev/radio.h"
 
+//GUOGE 
+extern uint32_t gg_num_total_sent;
+extern uint32_t gg_num_udp_sent;
+extern uint32_t gg_num_successfully_transmitted;
+extern uint32_t gg_num_dropped_buffer_overflow;
+extern uint32_t gg_num_dropped_channel_loss;
+extern uint32_t gg_max_num_neighbour_queue;	
+
+void clear_queues();
+
+
 extern const struct mac_driver csma_driver;
 
 const struct mac_driver *csma_init(const struct mac_driver *r);

@@ -1,0 +1,249 @@
+Random seed: 123456
+346532: ID-8 :Rime started with address 0.18.116.8.0.8.8.8
+355986: ID-8 :MAC 00:12:74:08:00:08:08:08 Contiki-3.x-2967-g39bab4f started. Node id is set to 8.
+364895: ID-8 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+375488: ID-8 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7408:0008:0808
+377532: ID-8 :Starting 'UDP client process'
+464825: ID-11 :Rime started with address 0.18.116.11.0.11.11.11
+474329: ID-11 :MAC 00:12:74:0b:00:0b:0b:0b Contiki-3.x-2967-g39bab4f started. Node id is set to 11.
+483310: ID-11 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+493904: ID-11 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:740b:000b:0b0b
+495960: ID-11 :Starting 'UDP client process'
+509888: ID-2 :Rime started with address 0.18.116.2.0.2.2.2
+519338: ID-2 :MAC 00:12:74:02:00:02:02:02 Contiki-3.x-2967-g39bab4f started. Node id is set to 2.
+524421: ID-6 :Rime started with address 0.18.116.6.0.6.6.6
+528246: ID-2 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+533873: ID-6 :MAC 00:12:74:06:00:06:06:06 Contiki-3.x-2967-g39bab4f started. Node id is set to 6.
+538839: ID-2 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7402:0002:0202
+540883: ID-2 :Starting 'UDP client process'
+542781: ID-6 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+553374: ID-6 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7406:0006:0606
+555418: ID-6 :Starting 'UDP client process'
+622124: ID-4 :Rime started with address 0.18.116.4.0.4.4.4
+631576: ID-4 :MAC 00:12:74:04:00:04:04:04 Contiki-3.x-2967-g39bab4f started. Node id is set to 4.
+640484: ID-4 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+651077: ID-4 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7404:0004:0404
+653121: ID-4 :Starting 'UDP client process'
+654205: ID-1 :Rime started with address 0.18.116.1.0.1.1.1
+663658: ID-1 :MAC 00:12:74:01:00:01:01:01 Contiki-3.x-2967-g39bab4f started. Node id is set to 1.
+672566: ID-1 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+675534: ID-7 :Rime started with address 0.18.116.7.0.7.7.7
+683159: ID-1 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7401:0001:0101
+684987: ID-7 :MAC 00:12:74:07:00:07:07:07 Contiki-3.x-2967-g39bab4f started. Node id is set to 7.
+685202: ID-1 :Starting 'UDP server process'
+693895: ID-7 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+704488: ID-7 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7407:0007:0707
+706532: ID-7 :Starting 'UDP client process'
+830845: ID-10 :Rime started with address 0.18.116.10.0.10.10.10
+840348: ID-10 :MAC 00:12:74:0a:00:0a:0a:0a Contiki-3.x-2967-g39bab4f started. Node id is set to 10.
+849330: ID-10 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+859924: ID-10 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:740a:000a:0a0a
+861982: ID-10 :Starting 'UDP client process'
+982247: ID-9 :Rime started with address 0.18.116.9.0.9.9.9
+988880: ID-5 :Rime started with address 0.18.116.5.0.5.5.5
+991697: ID-9 :MAC 00:12:74:09:00:09:09:09 Contiki-3.x-2967-g39bab4f started. Node id is set to 9.
+998331: ID-5 :MAC 00:12:74:05:00:05:05:05 Contiki-3.x-2967-g39bab4f started. Node id is set to 5.
+1000607: ID-9 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+1007240: ID-5 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+1011195: ID-9 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7409:0009:0909
+1013239: ID-9 :Starting 'UDP client process'
+1017829: ID-5 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7405:0005:0505
+1019873: ID-5 :Starting 'UDP client process'
+1173109: ID-3 :Rime started with address 0.18.116.3.0.3.3.3
+1182559: ID-3 :MAC 00:12:74:03:00:03:03:03 Contiki-3.x-2967-g39bab4f started. Node id is set to 3.
+1191467: ID-3 :nullsec CSMA nullrdc, channel check rate 128 Hz, radio channel 26, CCA threshold -45
+1202058: ID-3 :Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7403:0003:0303
+1204102: ID-3 :Starting 'UDP client process'
+600404550: ID-8 :GUOGE--1 8893 0 8804 0 85 2 16
+600504466: ID-11 :GUOGE--1 61 0 11 0 50 2 16
+600547493: ID-2 :GUOGE--1 23 0 11 0 12 1 16
+600571908: ID-6 :GUOGE--1 10440 0 10308 1 131 2 16
+600659777: ID-4 :GUOGE--1 39 0 10 0 29 1 16
+600744021: ID-7 :GUOGE--1 8931 0 7576 13 1339 2 16
+600867855: ID-10 :GUOGE--1 69 0 16 0 53 2 16
+601043662: ID-9 :GUOGE--1 9058 0 7712 1 1338 2 16
+601050019: ID-5 :GUOGE--1 9541 0 9462 2 71 2 16
+601211409: ID-3 :GUOGE--1 210 0 51 1 158 2 16
+610405693: ID-8 :GUOGE--cleanup round:1, num variance:146
+610506912: ID-11 :GUOGE--cleanup round:1, num variance:0
+610545312: ID-2 :GUOGE--cleanup round:1, num variance:0
+610576809: ID-6 :GUOGE--cleanup round:1, num variance:153
+610657550: ID-4 :GUOGE--cleanup round:1, num variance:0
+610742999: ID-7 :GUOGE--cleanup round:1, num variance:152
+610865673: ID-10 :GUOGE--cleanup round:1, num variance:0
+611041293: ID-9 :GUOGE--cleanup round:1, num variance:146
+611068578: ID-5 :GUOGE--cleanup round:1, num variance:154
+611208532: ID-3 :GUOGE--cleanup round:1, num variance:0
+1210432807: ID-8 :GUOGE--2 6604 0 6425 1 180 2 32
+1210509095: ID-11 :GUOGE--2 52 0 21 0 31 2 32
+1210547492: ID-2 :GUOGE--2 41 0 19 0 22 1 32
+1210580083: ID-6 :GUOGE--2 4924 0 4760 0 164 2 32
+1210660770: ID-4 :GUOGE--2 437 0 259 0 178 1 32
+1210746311: ID-7 :GUOGE--2 4907 0 4523 1 383 2 32
+1210869222: ID-10 :GUOGE--2 1074 0 808 0 266 2 32
+1211044488: ID-9 :GUOGE--2 6749 0 6399 1 349 2 32
+1211074739: ID-5 :GUOGE--2 7048 0 7029 0 19 2 32
+1211211149: ID-3 :GUOGE--2 112 0 45 0 67 1 32
+1220452665: ID-8 :GUOGE--cleanup round:1, num variance:159
+1220506977: ID-11 :GUOGE--cleanup round:1, num variance:0
+1220545311: ID-2 :GUOGE--cleanup round:1, num variance:0
+1220583123: ID-6 :GUOGE--cleanup round:1, num variance:80
+1220657638: ID-4 :GUOGE--cleanup round:1, num variance:0
+1220749881: ID-7 :GUOGE--cleanup round:1, num variance:81
+1220865692: ID-10 :GUOGE--cleanup round:1, num variance:0
+1221040947: ID-9 :GUOGE--cleanup round:1, num variance:78
+1221072464: ID-5 :GUOGE--cleanup round:1, num variance:127
+1221208639: ID-3 :GUOGE--cleanup round:1, num variance:0
+1820455656: ID-8 :GUOGE--3 2909 0 2206 0 703 2 64
+1820573483: ID-2 :GUOGE--3 2901 0 1968 0 931 2 64
+1820575517: ID-11 :GUOGE--3 4339 0 3689 2 648 2 64
+1820586666: ID-6 :GUOGE--3 3231 0 2369 0 862 2 64
+1820706231: ID-4 :GUOGE--3 3398 0 2613 0 783 2 64
+1820754528: ID-7 :GUOGE--3 3518 0 2833 0 684 2 64
+1820868947: ID-10 :GUOGE--3 605 0 348 0 257 2 64
+1821044444: ID-9 :GUOGE--3 2393 0 1640 0 753 2 64
+1821103116: ID-5 :GUOGE--3 4168 0 3913 1 253 2 64
+1821253038: ID-3 :GUOGE--3 2360 0 1887 0 473 2 64
+1830452066: ID-8 :GUOGE--cleanup round:1, num variance:40
+1830578585: ID-11 :GUOGE--cleanup round:1, num variance:65
+1830584351: ID-2 :GUOGE--cleanup round:1, num variance:41
+1830588046: ID-6 :GUOGE--cleanup round:1, num variance:67
+1830704862: ID-4 :GUOGE--cleanup round:1, num variance:41
+1830758167: ID-7 :GUOGE--cleanup round:1, num variance:40
+1830866079: ID-10 :GUOGE--cleanup round:1, num variance:0
+1831040899: ID-9 :GUOGE--cleanup round:1, num variance:40
+1831103235: ID-5 :GUOGE--cleanup round:1, num variance:86
+1831255756: ID-3 :GUOGE--cleanup round:1, num variance:46
+2430455970: ID-8 :GUOGE--4 1515 0 1399 0 116 2 128
+2430582584: ID-11 :GUOGE--4 2076 0 1936 0 140 2 128
+2430588068: ID-2 :GUOGE--4 1261 0 1123 0 140 2 128
+2430595520: ID-6 :GUOGE--4 2350 0 2162 0 188 2 128
+2430708500: ID-4 :GUOGE--4 1375 0 1277 0 98 2 128
+2430761868: ID-7 :GUOGE--4 1220 0 1147 0 73 1 128
+2430870122: ID-10 :GUOGE--4 1147 0 1006 0 141 2 128
+2431044455: ID-9 :GUOGE--4 1242 0 1144 0 98 1 128
+2431106890: ID-5 :GUOGE--4 4098 0 4039 0 59 2 128
+2431259339: ID-3 :GUOGE--4 1283 0 1194 0 89 2 128
+2440452131: ID-8 :GUOGE--cleanup round:1, num variance:36
+2440584167: ID-2 :GUOGE--cleanup round:1, num variance:20
+2440585448: ID-11 :GUOGE--cleanup round:1, num variance:35
+2440598769: ID-6 :GUOGE--cleanup round:1, num variance:54
+2440712030: ID-4 :GUOGE--cleanup round:1, num variance:22
+2440765488: ID-7 :GUOGE--cleanup round:1, num variance:18
+2440873277: ID-10 :GUOGE--cleanup round:1, num variance:22
+2441041010: ID-9 :GUOGE--cleanup round:1, num variance:22
+2441110032: ID-5 :GUOGE--cleanup round:1, num variance:49
+2441263012: ID-3 :GUOGE--cleanup round:1, num variance:20
+3040454926: ID-8 :GUOGE--5 908 0 884 0 24 2 256
+3040587010: ID-2 :GUOGE--5 650 0 624 0 26 1 256
+3040588245: ID-11 :GUOGE--5 913 0 893 0 20 1 256
+3040601910: ID-6 :GUOGE--5 1014 0 985 0 29 2 256
+3040714882: ID-4 :GUOGE--5 827 0 801 0 26 2 256
+3040768303: ID-7 :GUOGE--5 607 0 597 0 10 1 256
+3040876137: ID-10 :GUOGE--5 605 0 568 0 37 1 256
+3041043748: ID-9 :GUOGE--5 637 0 616 0 21 1 256
+3041113636: ID-5 :GUOGE--5 2444 0 2424 0 20 2 256
+3041265865: ID-3 :GUOGE--5 665 0 642 0 23 1 256
+3050452085: ID-8 :GUOGE--cleanup round:1, num variance:21
+3050584205: ID-2 :GUOGE--cleanup round:1, num variance:12
+3050585382: ID-11 :GUOGE--cleanup round:1, num variance:20
+3050598704: ID-6 :GUOGE--cleanup round:1, num variance:30
+3050712028: ID-4 :GUOGE--cleanup round:1, num variance:10
+3050765440: ID-7 :GUOGE--cleanup round:1, num variance:10
+3050873275: ID-10 :GUOGE--cleanup round:1, num variance:10
+3051040918: ID-9 :GUOGE--cleanup round:1, num variance:11
+3051110034: ID-5 :GUOGE--cleanup round:1, num variance:31
+3051263011: ID-3 :GUOGE--cleanup round:1, num variance:10
+3650454969: ID-8 :GUOGE--6 427 0 417 0 10 1 512
+3650588023: ID-2 :GUOGE--6 315 0 305 0 10 1 512
+3650588254: ID-11 :GUOGE--6 497 0 484 0 13 1 512
+3650601260: ID-6 :GUOGE--6 663 0 659 0 4 1 512
+3650714569: ID-4 :GUOGE--6 408 0 400 0 8 1 512
+3650768008: ID-7 :GUOGE--6 304 0 297 0 7 1 512
+3650876160: ID-10 :GUOGE--6 308 0 297 0 11 1 512
+3651044449: ID-9 :GUOGE--6 370 0 362 0 8 2 512
+3651112597: ID-5 :GUOGE--6 899 0 893 0 6 1 512
+3651265580: ID-3 :GUOGE--6 309 0 308 0 1 1 512
+3660451720: ID-8 :GUOGE--cleanup round:1, num variance:6
+3660583867: ID-2 :GUOGE--cleanup round:1, num variance:4
+3660585034: ID-11 :GUOGE--cleanup round:1, num variance:6
+3660598746: ID-6 :GUOGE--cleanup round:1, num variance:10
+3660711730: ID-4 :GUOGE--cleanup round:1, num variance:8
+3660765096: ID-7 :GUOGE--cleanup round:1, num variance:6
+3660873713: ID-10 :GUOGE--cleanup round:1, num variance:4
+3661040598: ID-9 :GUOGE--cleanup round:1, num variance:4
+3661110079: ID-5 :GUOGE--cleanup round:1, num variance:12
+3661262712: ID-3 :GUOGE--cleanup round:1, num variance:4
+4260455947: ID-8 :GUOGE--7 158 0 156 0 2 1 1024
+4260587050: ID-2 :GUOGE--7 160 0 160 0 0 1 1024
+4260589250: ID-11 :GUOGE--7 156 0 156 0 0 1 1024
+4260601600: ID-6 :GUOGE--7 310 0 307 0 3 1 1024
+4260715914: ID-4 :GUOGE--7 308 0 305 0 3 1 1024
+4260769319: ID-7 :GUOGE--7 155 0 153 0 2 1 1024
+4260878147: ID-10 :GUOGE--7 158 0 156 0 2 1 1024
+4261044774: ID-9 :GUOGE--7 158 0 157 0 1 1 1024
+4261113920: ID-5 :GUOGE--7 456 0 456 0 0 1 1024
+4261266890: ID-3 :GUOGE--7 158 0 157 0 1 1 1024
+4270451719: ID-8 :GUOGE--cleanup round:1, num variance:4
+4270583867: ID-2 :GUOGE--cleanup round:1, num variance:2
+4270585082: ID-11 :GUOGE--cleanup round:1, num variance:2
+4270598403: ID-6 :GUOGE--cleanup round:1, num variance:6
+4270711748: ID-4 :GUOGE--cleanup round:1, num variance:5
+4270765140: ID-7 :GUOGE--cleanup round:1, num variance:2
+4270881871: ID-10 :GUOGE--cleanup round:1, num variance:2
+4271040552: ID-9 :GUOGE--cleanup round:1, num variance:4
+4271109733: ID-5 :GUOGE--cleanup round:1, num variance:4
+4271262710: ID-3 :GUOGE--cleanup round:1, num variance:2
+4870454276: ID-8 :GUOGE--8 82 0 82 0 0 1 2048
+4870586422: ID-2 :GUOGE--8 81 0 81 0 0 1 2048
+4870587591: ID-11 :GUOGE--8 83 0 83 0 0 1 2048
+4870601609: ID-6 :GUOGE--8 159 0 158 0 1 1 2048
+4870714985: ID-4 :GUOGE--8 158 0 156 0 2 1 2048
+4870767634: ID-7 :GUOGE--8 84 0 83 0 1 1 2048
+4870884419: ID-10 :GUOGE--8 80 0 80 0 0 1 2048
+4871043145: ID-9 :GUOGE--8 79 0 79 0 0 1 2048
+4871112985: ID-5 :GUOGE--8 232 0 232 0 0 1 2048
+4871265271: ID-3 :GUOGE--8 80 0 80 0 0 1 2048
+4880451765: ID-8 :GUOGE--cleanup round:1, num variance:0
+4880583865: ID-2 :GUOGE--cleanup round:1, num variance:2
+4880585080: ID-11 :GUOGE--cleanup round:1, num variance:0
+4880598402: ID-6 :GUOGE--cleanup round:1, num variance:0
+4880711731: ID-4 :GUOGE--cleanup round:1, num variance:4
+4880765095: ID-7 :GUOGE--cleanup round:1, num variance:2
+4880881370: ID-10 :GUOGE--cleanup round:1, num variance:2
+4881040553: ID-9 :GUOGE--cleanup round:1, num variance:4
+4881109732: ID-5 :GUOGE--cleanup round:1, num variance:6
+4881262713: ID-3 :GUOGE--cleanup round:1, num variance:2
+5480454259: ID-8 :GUOGE--9 45 0 45 0 0 1 4096
+5480586410: ID-2 :GUOGE--9 44 0 44 0 0 1 4096
+5480587579: ID-11 :GUOGE--9 46 0 46 0 0 1 4096
+5480600900: ID-6 :GUOGE--9 83 0 83 0 0 1 4096
+5480714273: ID-4 :GUOGE--9 80 0 80 0 0 1 4096
+5480767636: ID-7 :GUOGE--9 44 0 44 0 0 1 4096
+5480883820: ID-10 :GUOGE--9 47 0 47 0 0 1 4096
+5481043093: ID-9 :GUOGE--9 44 0 44 0 0 1 4096
+5481112966: ID-5 :GUOGE--9 124 0 124 0 0 1 4096
+5481265209: ID-3 :GUOGE--9 46 0 46 0 0 1 4096
+5490451764: ID-8 :GUOGE--cleanup round:1, num variance:0
+5490583867: ID-2 :GUOGE--cleanup round:1, num variance:2
+5490585083: ID-11 :GUOGE--cleanup round:1, num variance:0
+5490598404: ID-6 :GUOGE--cleanup round:1, num variance:0
+5490711730: ID-4 :GUOGE--cleanup round:1, num variance:4
+5490765141: ID-7 :GUOGE--cleanup round:1, num variance:0
+5490881369: ID-10 :GUOGE--cleanup round:1, num variance:0
+5491040598: ID-9 :GUOGE--cleanup round:1, num variance:0
+5491109734: ID-5 :GUOGE--cleanup round:1, num variance:2
+5491262713: ID-3 :GUOGE--cleanup round:1, num variance:0
+6090454389: ID-8 :GUOGE--10 26 0 26 0 0 1 8192
+6090586509: ID-2 :GUOGE--10 27 0 27 0 0 1 8192
+6090587767: ID-11 :GUOGE--10 24 0 24 0 0 1 8192
+6090601090: ID-6 :GUOGE--10 48 0 48 0 0 1 8192
+6090714371: ID-4 :GUOGE--10 51 0 51 0 0 1 8192
+6090767826: ID-7 :GUOGE--10 26 0 26 0 0 1 8192
+6090883962: ID-10 :GUOGE--10 27 0 27 0 0 1 8192
+6091043241: ID-9 :GUOGE--10 28 0 28 0 0 1 8192
+6091112424: ID-5 :GUOGE--10 68 0 68 0 0 1 8192
+6091265396: ID-3 :GUOGE--10 25 0 25 0 0 1 8192
+TEST TIMEOUT
+TEST FAILED
+Test ended at simulation time: 6100000000

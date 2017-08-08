@@ -72,7 +72,7 @@
 
 #include <stdio.h>
 
-#define DEBUG DEBUG_NONE
+#define DEBUG 0
 #include "net/ip/uip-debug.h"
 #if DEBUG
 /* PRINTFI and PRINTFO are defined for input and output to debug one without changing the timing of the other */
@@ -1248,7 +1248,7 @@ send_packet(linkaddr_t *dest)
    */
   packetbuf_set_addr(PACKETBUF_ADDR_RECEIVER, dest);
 
-#if NETSTACK_CONF_BRIDGE_MODE
+#if NETSTACK_CONF_BRIDGE_MODE   
   /* This needs to be explicitly set here for bridge mode to work */
   packetbuf_set_addr(PACKETBUF_ADDR_SENDER,(void*)&uip_lladdr);
 #endif

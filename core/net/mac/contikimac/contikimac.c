@@ -781,10 +781,10 @@ send_packet(mac_callback_t mac_callback, void *mac_callback_ptr,
 
   off();
 
-  PRINTF("contikimac: send (strobes=%u, len=%u, %s, %s), done\n", strobes,
+  PRINTF("contikimac: send (strobes=%u, len=%u, %s, col=%u), done\n", strobes,
          packetbuf_totlen(),
          got_strobe_ack ? "ack" : "no ack",
-         collisions ? "collision" : "no collision");
+         collisions ); //? "collision" : "no collision");
 
 #if CONTIKIMAC_CONF_COMPOWER
   /* Accumulate the power consumption for the packet transmission. */

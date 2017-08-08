@@ -40,8 +40,13 @@
 #include <string.h>
 #include <ctype.h>
 
-#define DEBUG DEBUG_PRINT
+#define DEBUG 0
 #include "net/ip/uip-debug.h"
+#if DEBUG
+#define PRINTF(...) printf(__VA_ARGS__)
+#else
+#define PRINTF(...)
+#endif
 
 #define UIP_IP_BUF   ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
 

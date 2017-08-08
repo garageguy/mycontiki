@@ -1,0 +1,5 @@
+for ((i=1;i<=$2;i++))
+do
+  grep "ID:$i	" $1 | tail -1 | awk -F'\t' '{print $2, $3}' | sed 's/GUOGE--//g' | sed 's/ID://g' >> processed
+done
+  

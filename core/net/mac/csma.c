@@ -132,6 +132,15 @@ LIST(neighbor_list);
 
 static void packet_sent(void *ptr, int status, int num_transmissions);
 static void transmit_packet_list(void *ptr);
+
+//GUOGE 
+uint32_t gg_num_total_sent=0;
+uint32_t gg_num_udp_sent=0;
+uint32_t gg_num_successfully_transmitted=0;
+uint32_t gg_num_dropped_buffer_overflow=0;
+uint32_t gg_num_dropped_channel_loss=0;
+uint32_t gg_max_num_neighbour_queue=0;		
+
 /*---------------------------------------------------------------------------*/
 static struct neighbor_queue *
 neighbor_queue_from_addr(const linkaddr_t *addr)
@@ -239,11 +248,13 @@ tx_done(int status, struct rdc_buf_list *q, struct neighbor_queue *n)
   switch(status) {
   case MAC_TX_OK:
     PRINTF("csma: rexmit ok %d\n", n->transmissions);
+	gg_num_successfully_transmitted++;
     break;
   case MAC_TX_COLLISION:
   case MAC_TX_NOACK:
     PRINTF("csma: drop with status %d after %d transmissions, %d collisions\n",
                  status, n->transmissions, n->collisions);
+	gg_num_dropped_channel_loss++;
     break;
   default:
     PRINTF("csma: rexmit failed %d: %d\n", n->transmissions, status);
@@ -252,6 +263,7 @@ tx_done(int status, struct rdc_buf_list *q, struct neighbor_queue *n)
 
   free_packet(n, q, status);
   mac_call_sent_callback(sent, cptr, status, n->transmissions);
+
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -313,6 +325,33 @@ tx_ok(struct rdc_buf_list *q, struct neighbor_queue *n, int num_transmissions)
   tx_done(MAC_TX_OK, q, n);
 }
 /*---------------------------------------------------------------------------*/
+void
+clear_queues()
+{
+  struct rdc_buf_list *p;
+  struct neighbor_queue *n = list_head(neighbor_list), *m;
+  int count=0;
+  
+  while(n != NULL) {
+	  for(p = list_head(n->queued_packet_list);
+	      p != NULL; p = list_item_next(p)) {
+		    list_remove(n->queued_packet_list, p);
+
+		    queuebuf_free(p->buf);
+		    memb_free(&metadata_memb, p->ptr);
+		    memb_free(&packet_memb, p);
+			count++;
+	  }
+	m = list_item_next(n);    
+	list_remove(neighbor_list, n);
+  	memb_free(&neighbor_memb, n); 
+	n = m;
+  }  	
+  //printf("GUOGE--neigh queue contains %d packets, cleaned!\n", count);
+
+  return; 
+}
+/*---------------------------------------------------------------------------*/
 static void
 packet_sent(void *ptr, int status, int num_transmissions)
 {
@@ -369,6 +408,17 @@ send_packet(mac_callback_t sent, void *ptr)
   static uint16_t seqno;
   const linkaddr_t *addr = packetbuf_addr(PACKETBUF_ADDR_RECEIVER);
 
+  //GUOGE
+  gg_num_total_sent++;
+    PRINTF("GUOGE--CSMA: send to %02x%02x:%02x%02x:%02x%02x:%02x%02x\n",
+               packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[0],
+               packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[1],
+               packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[2],
+               packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[3],
+               packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[4],
+               packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[5],
+               packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[6],
+               packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[7]); 
   if(!initialized) {
     initialized = 1;
     /* Initialize the sequence number to a random value as per 802.15.4. */
@@ -396,6 +446,8 @@ send_packet(mac_callback_t sent, void *ptr)
       LIST_STRUCT_INIT(n, queued_packet_list);
       /* Add neighbor to the list */
       list_add(neighbor_list, n);
+	  if (list_length(neighbor_list)>gg_max_num_neighbour_queue)
+	  	gg_max_num_neighbour_queue++;
     }
   }
 
@@ -451,11 +503,17 @@ send_packet(mac_callback_t sent, void *ptr)
     } else {
       PRINTF("csma: Neighbor queue full\n");
     }
+	
     PRINTF("csma: could not allocate packet, dropping packet\n");
+	
   } else {
     PRINTF("csma: could not allocate neighbor, dropping packet\n");
   }
+//GUOGE
+  gg_num_dropped_buffer_overflow++;
   mac_call_sent_callback(sent, ptr, MAC_TX_ERR, 1);
+
+ 
 }
 /*---------------------------------------------------------------------------*/
 static void

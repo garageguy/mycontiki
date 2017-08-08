@@ -3235,6 +3235,7 @@ public class Cooja extends Observable {
 
       /* Load simulation */
       String config = args[0].substring("-nogui=".length());
+	  logger.info("GUOGE--"+config);
       File configFile = new File(config);
       Simulation sim = quickStartSimulationConfig(configFile, false, randomSeed);
       if (sim == null) {
@@ -3255,6 +3256,10 @@ public class Cooja extends Observable {
        * simulation has no control plugin, but has external (old style) test script.
        * We will manually start a test editor from here. */
       if (!hasController) {
+	  	String ggtemp;
+		ggtemp=config.substring(0, config.length()-4) + ".js";
+		logger.info("GUOGE--"+ggtemp);
+     
         File scriptFile = new File(config.substring(0, config.length()-4) + ".js");
         if (scriptFile.exists()) {
           logger.info("Detected old simulation test, starting test editor manually from: " + scriptFile);

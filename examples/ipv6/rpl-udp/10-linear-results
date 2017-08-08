@@ -1,0 +1,259 @@
+Random seed: 123456
+347209:8:Rime started with address 0.18.116.8.0.8.8.8
+356663:8:MAC 00:12:74:08:00:08:08:08 Contiki-3.x-2967-g39bab4f started. Node id is set to 8.
+365275:8:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+375945:8:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7408:0008:0808
+377989:8:Starting 'UDP client process'
+465502:11:Rime started with address 0.18.116.11.0.11.11.11
+475006:11:MAC 00:12:74:0b:00:0b:0b:0b Contiki-3.x-2967-g39bab4f started. Node id is set to 11.
+483618:11:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+494211:11:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:740b:000b:0b0b
+496254:11:Starting 'UDP client process'
+510565:2:Rime started with address 0.18.116.2.0.2.2.2
+520015:2:MAC 00:12:74:02:00:02:02:02 Contiki-3.x-2967-g39bab4f started. Node id is set to 2.
+525098:6:Rime started with address 0.18.116.6.0.6.6.6
+528627:2:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+534550:6:MAC 00:12:74:06:00:06:06:06 Contiki-3.x-2967-g39bab4f started. Node id is set to 6.
+539297:2:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7402:0002:0202
+541341:2:Starting 'UDP client process'
+543162:6:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+553832:6:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7406:0006:0606
+555876:6:Starting 'UDP client process'
+622801:4:Rime started with address 0.18.116.4.0.4.4.4
+632253:4:MAC 00:12:74:04:00:04:04:04 Contiki-3.x-2967-g39bab4f started. Node id is set to 4.
+640865:4:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+651535:4:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7404:0004:0404
+653579:4:Starting 'UDP client process'
+654882:1:Rime started with address 0.18.116.1.0.1.1.1
+664335:1:MAC 00:12:74:01:00:01:01:01 Contiki-3.x-2967-g39bab4f started. Node id is set to 1.
+672946:1:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+676211:7:Rime started with address 0.18.116.7.0.7.7.7
+683617:1:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7401:0001:0101
+685660:1:Starting 'UDP server process'
+685664:7:MAC 00:12:74:07:00:07:07:07 Contiki-3.x-2967-g39bab4f started. Node id is set to 7.
+694276:7:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+704946:7:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7407:0007:0707
+706990:7:Starting 'UDP client process'
+831522:10:Rime started with address 0.18.116.10.0.10.10.10
+841025:10:MAC 00:12:74:0a:00:0a:0a:0a Contiki-3.x-2967-g39bab4f started. Node id is set to 10.
+849637:10:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+860231:10:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:740a:000a:0a0a
+862274:10:Starting 'UDP client process'
+982924:9:Rime started with address 0.18.116.9.0.9.9.9
+989557:5:Rime started with address 0.18.116.5.0.5.5.5
+992374:9:MAC 00:12:74:09:00:09:09:09 Contiki-3.x-2967-g39bab4f started. Node id is set to 9.
+999008:5:MAC 00:12:74:05:00:05:05:05 Contiki-3.x-2967-g39bab4f started. Node id is set to 5.
+1000986:9:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+1007620:5:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+1011656:9:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7409:0009:0909
+1013700:9:Starting 'UDP client process'
+1018290:5:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7405:0005:0505
+1020334:5:Starting 'UDP client process'
+1173786:3:Rime started with address 0.18.116.3.0.3.3.3
+1183236:3:MAC 00:12:74:03:00:03:03:03 Contiki-3.x-2967-g39bab4f started. Node id is set to 3.
+1191847:3:nullsec CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26, CCA threshold -45
+1202518:3:Tentative link-local IPv6 address fe80:0000:0000:0000:0212:7403:0003:0303
+1204562:3:Starting 'UDP client process'
+600396502:8:GUOGE--1 1098 4024 1065 0 26 2 16
+600503893:11:GUOGE--1 135 4240 59 0 76 3 16
+600550392:2:GUOGE--1 330 3609 170 1 159 3 16
+600564590:6:GUOGE--1 349 4624 313 0 28 2 16
+600714922:7:GUOGE--1 87 4051 27 4 56 2 16
+600869758:10:GUOGE--1 70 2148 32 2 29 2 16
+600950691:4:GUOGE--1 961 3159 779 7 168 3 16
+601029149:5:GUOGE--1 351 4557 320 3 22 2 16
+601219034:3:GUOGE--1 390 4083 219 81 84 4 16
+601362284:9:GUOGE--1 187 4162 97 8 75 3 16
+610399008:8:GUOGE--cleanup round:1, num variance:6
+610500348:11:GUOGE--cleanup round:1, num variance:0
+610553295:2:GUOGE--cleanup round:1, num variance:0
+610567850:6:GUOGE--cleanup round:1, num variance:1
+610711729:7:GUOGE--cleanup round:1, num variance:0
+610866476:10:GUOGE--cleanup round:1, num variance:5
+611190795:5:GUOGE--cleanup round:1, num variance:3
+611216515:3:GUOGE--cleanup round:1, num variance:8
+611221489:4:GUOGE--cleanup round:1, num variance:18
+611362257:9:GUOGE--cleanup round:1, num variance:8
+1210402842:8:GUOGE--2 708 2228 680 2 25 2 32
+1210503650:11:GUOGE--2 35 2358 17 0 18 2 32
+1210556492:2:GUOGE--2 44 2337 15 0 29 2 32
+1210570393:6:GUOGE--2 14 2399 8 2 4 2 32
+1210715597:7:GUOGE--2 254 2264 201 9 44 3 32
+1210869962:10:GUOGE--2 113 2265 59 0 55 2 32
+1211192424:5:GUOGE--2 252 2337 231 2 21 2 32
+1211220814:3:GUOGE--2 386 2023 266 3 117 3 32
+1211501139:4:GUOGE--2 532 1921 387 1 145 2 32
+1211641964:9:GUOGE--2 613 1763 435 3 175 3 32
+1220405566:8:GUOGE--cleanup round:1, num variance:2
+1220500449:11:GUOGE--cleanup round:1, num variance:0
+1220553314:2:GUOGE--cleanup round:1, num variance:0
+1220567801:6:GUOGE--cleanup round:1, num variance:1
+1220719979:7:GUOGE--cleanup round:1, num variance:1
+1220866348:10:GUOGE--cleanup round:1, num variance:0
+1221188533:5:GUOGE--cleanup round:1, num variance:4
+1221377777:3:GUOGE--cleanup round:1, num variance:8
+1221502068:4:GUOGE--cleanup round:1, num variance:7
+1221795050:9:GUOGE--cleanup round:1, num variance:19
+1820409797:8:GUOGE--3 1695 1140 1693 0 4 2 64
+1820502558:11:GUOGE--3 8 1197 5 0 3 1 64
+1820557909:2:GUOGE--3 1639 1080 1568 0 71 3 64
+1820570628:6:GUOGE--3 14 1199 13 0 1 1 64
+1820721490:7:GUOGE--3 10 1196 5 0 6 1 64
+1820868666:10:GUOGE--3 6 1197 5 0 1 1 64
+1821192771:5:GUOGE--3 1403 1196 1398 2 3 2 64
+1821505914:4:GUOGE--3 241 1116 149 0 94 2 64
+1821613558:3:GUOGE--3 1225 1143 1202 1 22 2 64
+1821794757:9:GUOGE--3 119 1160 76 0 45 2 64
+1830500349:11:GUOGE--cleanup round:1, num variance:0
+1830567830:6:GUOGE--cleanup round:1, num variance:0
+1830625737:8:GUOGE--cleanup round:1, num variance:32
+1830718944:7:GUOGE--cleanup round:1, num variance:0
+1830840621:2:GUOGE--cleanup round:1, num variance:38
+1831040081:10:GUOGE--cleanup round:1, num variance:1
+1831197885:5:GUOGE--cleanup round:1, num variance:24
+1831510798:4:GUOGE--cleanup round:1, num variance:0
+1831615876:3:GUOGE--cleanup round:1, num variance:22
+1831791314:9:GUOGE--cleanup round:1, num variance:1
+2430570023:6:GUOGE--4 9 600 9 0 0 1 128
+2430628253:8:GUOGE--4 932 585 909 0 22 2 128
+2430722093:7:GUOGE--4 37 597 18 0 19 3 128
+2430787317:11:GUOGE--4 59 594 32 1 21 2 128
+2430847603:2:GUOGE--4 1060 556 912 0 146 4 128
+2431041957:10:GUOGE--4 32 596 15 1 17 2 128
+2431266474:5:GUOGE--4 1491 599 1488 4 1 2 128
+2431516033:4:GUOGE--4 687 565 577 1 109 3 128
+2431794452:9:GUOGE--4 31 596 17 0 14 2 128
+2431887725:3:GUOGE--4 847 594 830 4 12 3 128
+2440567783:6:GUOGE--cleanup round:1, num variance:0
+2440624361:8:GUOGE--cleanup round:1, num variance:8
+2440718964:7:GUOGE--cleanup round:1, num variance:0
+2441003618:11:GUOGE--cleanup round:1, num variance:15
+2441045483:10:GUOGE--cleanup round:1, num variance:0
+2441065394:2:GUOGE--cleanup round:1, num variance:11
+2441266704:5:GUOGE--cleanup round:1, num variance:8
+2441764927:4:GUOGE--cleanup round:1, num variance:12
+2441791231:9:GUOGE--cleanup round:1, num variance:0
+2441888500:3:GUOGE--cleanup round:1, num variance:4
+3040570668:6:GUOGE--5 25 298 24 1 0 2 256
+3040628174:8:GUOGE--5 620 297 601 0 21 2 256
+3040723112:7:GUOGE--5 279 292 172 0 107 2 256
+3041047707:10:GUOGE--5 8 299 3 0 5 1 256
+3041209724:11:GUOGE--5 501 289 357 1 143 2 256
+3041228548:2:GUOGE--5 466 291 350 1 116 2 256
+3041270562:5:GUOGE--5 841 297 798 5 38 3 256
+3041771609:4:GUOGE--5 450 296 399 0 52 3 256
+3041794868:9:GUOGE--5 178 298 161 5 9 2 256
+3041892201:3:GUOGE--5 586 296 556 1 31 2 256
+3050567804:6:GUOGE--cleanup round:1, num variance:1
+3050624664:8:GUOGE--cleanup round:1, num variance:22
+3050718899:7:GUOGE--cleanup round:1, num variance:0
+3051045529:10:GUOGE--cleanup round:1, num variance:0
+3051225142:2:GUOGE--cleanup round:1, num variance:9
+3051253713:11:GUOGE--cleanup round:1, num variance:18
+3051267823:5:GUOGE--cleanup round:1, num variance:10
+3051774907:4:GUOGE--cleanup round:1, num variance:8
+3051791686:9:GUOGE--cleanup round:1, num variance:11
+3051888735:3:GUOGE--cleanup round:1, num variance:20
+3650570661:6:GUOGE--6 10 149 10 0 0 1 512
+3650627894:8:GUOGE--6 717 149 716 0 1 2 512
+3650725016:7:GUOGE--6 128 149 123 0 5 2 512
+3651228996:2:GUOGE--6 307 149 293 0 14 2 512
+3651254372:11:GUOGE--6 568 148 509 0 59 2 512
+3651270234:5:GUOGE--6 972 150 967 0 6 1 512
+3651285135:10:GUOGE--6 74 150 48 0 25 2 512
+3651794804:9:GUOGE--6 289 150 291 0 0 1 512
+3651848884:4:GUOGE--6 380 149 368 1 11 2 512
+3651892319:3:GUOGE--6 837 149 801 0 34 2 512
+3660568586:6:GUOGE--cleanup round:1, num variance:1
+3660624318:8:GUOGE--cleanup round:1, num variance:8
+3660727336:7:GUOGE--cleanup round:1, num variance:4
+3661257588:11:GUOGE--cleanup round:1, num variance:6
+3661267006:5:GUOGE--cleanup round:1, num variance:10
+3661288403:10:GUOGE--cleanup round:1, num variance:4
+3661477838:2:GUOGE--cleanup round:1, num variance:4
+3661791321:9:GUOGE--cleanup round:1, num variance:2
+3661845799:4:GUOGE--cleanup round:1, num variance:8
+3661888386:3:GUOGE--cleanup round:1, num variance:8
+4260572625:6:GUOGE--7 15 75 15 0 0 1 1024
+4260627823:8:GUOGE--7 413 74 411 0 4 1 1024
+4260731112:7:GUOGE--7 180 75 170 0 10 3 1024
+4261261457:11:GUOGE--7 324 74 299 0 25 1 1024
+4261271246:5:GUOGE--7 490 75 489 0 1 1 1024
+4261292072:10:GUOGE--7 193 75 177 0 16 2 1024
+4261478990:2:GUOGE--7 183 75 169 0 16 2 1024
+4261794779:9:GUOGE--7 181 75 183 0 0 2 1024
+4261849583:4:GUOGE--7 285 75 274 0 11 2 1024
+4261892216:3:GUOGE--7 293 74 284 0 10 2 1024
+4270576728:6:GUOGE--cleanup round:1, num variance:0
+4270624316:8:GUOGE--cleanup round:1, num variance:8
+4270734570:7:GUOGE--cleanup round:1, num variance:2
+4271257633:11:GUOGE--cleanup round:1, num variance:4
+4271274961:5:GUOGE--cleanup round:1, num variance:6
+4271295548:10:GUOGE--cleanup round:1, num variance:3
+4271475169:2:GUOGE--cleanup round:1, num variance:2
+4271791275:9:GUOGE--cleanup round:1, num variance:2
+4271853032:4:GUOGE--cleanup round:1, num variance:2
+4271888390:3:GUOGE--cleanup round:1, num variance:2
+4870586818:6:GUOGE--8 15 37 15 0 0 1 2048
+4870627846:8:GUOGE--8 235 38 235 0 0 1 2048
+4870737400:7:GUOGE--8 86 38 84 0 2 1 2048
+4871261153:11:GUOGE--8 165 38 163 0 2 2 2048
+4871278619:5:GUOGE--8 159 36 158 0 1 1 2048
+4871310780:10:GUOGE--8 84 38 81 0 3 1 2048
+4871478043:2:GUOGE--8 84 37 81 0 3 1 2048
+4871794108:9:GUOGE--8 86 38 86 0 0 1 2048
+4871856605:4:GUOGE--8 159 37 154 0 5 1 2048
+4871891266:3:GUOGE--8 82 37 82 0 0 1 2048
+4880583455:6:GUOGE--cleanup round:1, num variance:0
+4880624319:8:GUOGE--cleanup round:1, num variance:0
+4880734569:7:GUOGE--cleanup round:1, num variance:0
+4881257634:11:GUOGE--cleanup round:1, num variance:0
+4881275066:5:GUOGE--cleanup round:1, num variance:5
+4881311153:10:GUOGE--cleanup round:1, num variance:0
+4881475168:2:GUOGE--cleanup round:1, num variance:2
+4881791276:9:GUOGE--cleanup round:1, num variance:0
+4881852986:4:GUOGE--cleanup round:1, num variance:4
+4881932593:3:GUOGE--cleanup round:1, num variance:4
+5480586266:6:GUOGE--9 14 19 14 0 0 1 4096
+5480627821:8:GUOGE--9 114 19 113 0 1 1 4096
+5480737425:7:GUOGE--9 43 18 42 0 1 1 4096
+5481260445:11:GUOGE--9 82 19 81 0 1 1 4096
+5481277823:5:GUOGE--9 89 19 89 0 0 1 4096
+5481313964:10:GUOGE--9 44 19 43 0 1 1 4096
+5481477963:2:GUOGE--9 46 19 44 0 2 1 4096
+5481794132:9:GUOGE--9 41 18 41 0 0 1 4096
+5481855849:4:GUOGE--9 79 18 78 0 1 1 4096
+5481939770:3:GUOGE--9 44 18 44 0 0 1 4096
+5490583454:6:GUOGE--cleanup round:1, num variance:0
+5490624316:8:GUOGE--cleanup round:1, num variance:2
+5490734568:7:GUOGE--cleanup round:1, num variance:2
+5491257633:11:GUOGE--cleanup round:1, num variance:2
+5491275054:5:GUOGE--cleanup round:1, num variance:1
+5491311153:10:GUOGE--cleanup round:1, num variance:0
+5491475189:2:GUOGE--cleanup round:1, num variance:1
+5491791275:9:GUOGE--cleanup round:1, num variance:2
+5491853031:4:GUOGE--cleanup round:1, num variance:2
+5491944145:3:GUOGE--cleanup round:1, num variance:0
+6090586413:6:GUOGE--10 15 10 15 0 0 1 8192
+6090627011:8:GUOGE--10 70 9 70 0 0 1 8192
+6090737504:7:GUOGE--10 27 10 26 0 1 1 8192
+6091260318:11:GUOGE--10 49 9 49 0 0 1 8192
+6091277947:5:GUOGE--10 58 10 58 0 0 1 8192
+6091314108:10:GUOGE--10 28 10 28 0 0 1 8192
+6091478125:2:GUOGE--10 25 10 25 0 0 1 8192
+6091794230:9:GUOGE--10 29 10 29 0 0 1 8192
+6091855986:4:GUOGE--10 48 10 48 0 0 1 8192
+6091947028:3:GUOGE--10 29 10 29 0 0 1 8192
+6100583391:6:GUOGE--cleanup round:1, num variance:0
+6100624253:8:GUOGE--cleanup round:1, num variance:4
+6100734502:7:GUOGE--cleanup round:1, num variance:0
+6101257567:11:GUOGE--cleanup round:1, num variance:2
+6101274942:5:GUOGE--cleanup round:1, num variance:0
+6101311087:10:GUOGE--cleanup round:1, num variance:0
+6101475103:2:GUOGE--cleanup round:1, num variance:0
+6101791209:9:GUOGE--cleanup round:1, num variance:0
+6101852965:4:GUOGE--cleanup round:1, num variance:0
+6101943548:3:GUOGE--cleanup round:1, num variance:0
+TEST TIMEOUT
+TEST FAILED
+Test ended at simulation time: 6200000000

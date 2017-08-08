@@ -1,0 +1,12 @@
+for ((j=1;j<=5;j++))
+do
+	for ((i=1;i<=$2;i++))
+		do
+			eval $(grep "GUOGE--$j " $1|grep "ID:$i	"|awk -F"GUOGE--$j " '{print $NF}'| awk '{printf("all=%s; bo=%s; cl=%s;", $1, $4, $5)}' )
+			((sum_all=sum_all+all))
+		   	((sum_bo=sum_bo+bo))
+		   	((sum_cl=sum_cl+cl))		
+	   	done	   
+  echo $j $sum_all $sum_bo $sum_cl
+done  
+

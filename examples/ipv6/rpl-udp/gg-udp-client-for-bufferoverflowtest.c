@@ -31,6 +31,7 @@
 #include "lib/random.h"
 #include "sys/ctimer.h"
 #include "net/ip/uip.h"
+#include "net/rpl/rpl.h"
 #include "net/ipv6/uip-ds6.h"
 #include "net/ip/uip-udp-packet.h"
 #include "sys/ctimer.h"
@@ -55,6 +56,12 @@
 #define DEBUG 0
 #include "net/ip/uip-debug.h"
 
+#if DEBUG
+#define PRINTF(...) printf(__VA_ARGS__)
+#else
+#define PRINTF(...)
+#endif
+
 #ifndef PERIOD
 #define PERIOD 10
 #endif
@@ -66,10 +73,10 @@
 
 
 #ifndef GGPERIOD
-#define GGPERIOD 600
+#define GGPERIOD 10 //600
 #endif
 #define CLEANUP_DURATION 10
-#define ROUNDS_NUM	10 
+#define ROUNDS_NUM	1 
 
 static struct uip_udp_conn *client_conn;
 static uip_ipaddr_t server_ipaddr;
@@ -121,6 +128,9 @@ send_packet(void *ptr)
   sprintf(buf, "Hello %d from the client", seq_id);
   uip_udp_packet_sendto(client_conn, buf, MAX_PAYLOAD_LEN, //strlen(buf),
                         &server_ipaddr, UIP_HTONS(UDP_SERVER_PORT));
+//    gg_num_udp_sent++;
+	gg_num_udp_sent=seq_id;
+
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -185,6 +195,12 @@ PROCESS_THREAD(udp_client_process, ev, data)
 {
   static struct etimer periodic;
   static struct ctimer backoff_timer;
+  
+  static struct etimer period_timer, wait_timer, duration_timer, cleanup_timer;
+  static uint16_t round = 0, cleanup_round=1; 
+  static uint32_t gg_sending_interval=0, gg_saved_num_total_sent=0;
+  rpl_dag_t *dag;
+  
 #if WITH_COMPOWER
   static int print = 0;
 #endif
@@ -222,8 +238,12 @@ PROCESS_THREAD(udp_client_process, ev, data)
   powertrace_sniff(POWERTRACE_ON);
 #endif
 
-  etimer_set(&periodic, SEND_INTERVAL);
-  while(1) {
+  //etimer_set(&periodic, SEND_INTERVAL);
+  etimer_set(&period_timer, (CLOCK_SECOND/8)<<round);
+  etimer_set(&duration_timer, CLOCK_SECOND * GGPERIOD);
+  //while(1) {
+  while(round < ROUNDS_NUM) {
+  	gg_sending_interval = (CLOCK_SECOND/8)<<round;
     PROCESS_YIELD();
     if(ev == tcpip_event) {
       tcpip_handler();
@@ -262,8 +282,54 @@ PROCESS_THREAD(udp_client_process, ev, data)
         }
       }
     }
+    if(ev == PROCESS_EVENT_TIMER) {
+      if(data == &period_timer) {
+        //etimer_reset(&period_timer);
+        etimer_set(&period_timer, gg_sending_interval);
+		dag = rpl_get_any_dag();
+  		if (dag == NULL ) {
+			continue;
+  		}
+        ctimer_set(&backoff_timer, random_rand() % gg_sending_interval, 
+					send_packet, NULL);//* RANDWAIT));
+      } else if (data == &duration_timer){
+            printf("GUOGE--%u %lu %lu %lu %lu %lu %lu %lu\n", 
+				round+1,
+		  		gg_num_total_sent,
+		  		gg_num_udp_sent,
+		  		gg_num_successfully_transmitted,
+		  		gg_num_dropped_buffer_overflow, 
+				gg_num_dropped_channel_loss,
+				gg_max_num_neighbour_queue,
+				gg_sending_interval);  
 
-    if(etimer_expired(&periodic)) {
+			gg_saved_num_total_sent = gg_num_total_sent;
+			clear_queues();
+			etimer_set(&cleanup_timer, CLOCK_SECOND * CLEANUP_DURATION);
+      } else if (data == &cleanup_timer){
+      	printf("GUOGE--cleanup round:%u, num variance:%lu\n", 
+			cleanup_round, gg_num_total_sent - gg_saved_num_total_sent);
+/*		if (cleanup_round++ < 5){
+			clear_queues();
+			etimer_set(&cleanup_timer, CLOCK_SECOND * CLEANUP_DURATION);
+			gg_saved_num_total_sent = gg_num_total_sent;
+			continue;
+		}
+*/
+		gg_num_total_sent=0;
+	  	gg_num_udp_sent=0;
+	  	gg_num_successfully_transmitted=0;
+	  	gg_num_dropped_buffer_overflow=0;
+		gg_num_dropped_channel_loss=0;
+		gg_max_num_neighbour_queue=0;
+		round++;
+		cleanup_round = 1;
+		etimer_set(&period_timer, (CLOCK_SECOND/8)<<round);
+		etimer_set(&duration_timer, CLOCK_SECOND * GGPERIOD);
+      }
+    }
+
+    /*if(etimer_expired(&periodic)) {
       etimer_reset(&periodic);
       ctimer_set(&backoff_timer, SEND_TIME, send_packet, NULL);
 
@@ -277,6 +343,7 @@ PROCESS_THREAD(udp_client_process, ev, data)
 #endif
 
     }
+	*/
   }
 
   PROCESS_END();

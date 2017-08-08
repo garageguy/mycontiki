@@ -47,8 +47,10 @@
 #define UIP_CONF_MAX_ROUTES   10
 #endif /* TEST_MORE_ROUTES */
 
+/*guoge
 #undef NETSTACK_CONF_RDC
 #define NETSTACK_CONF_RDC     nullrdc_driver
+*/
 #undef NULLRDC_CONF_802154_AUTOACK
 #define NULLRDC_CONF_802154_AUTOACK       1
 
@@ -69,4 +71,6 @@
 #define RPL_CONF_MOP RPL_MOP_NON_STORING /* Mode of operation*/
 #endif /* WITH_NON_STORING */
 
+//guoge
+#define CSMA_CONF_MAX_NEIGHBOR_QUEUES	4
 #endif

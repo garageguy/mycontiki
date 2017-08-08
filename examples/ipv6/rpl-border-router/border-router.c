@@ -54,9 +54,17 @@
 #include <string.h>
 #include <ctype.h>
 
-#define DEBUG DEBUG_NONE
+#define DEBUG 1
 #include "net/ip/uip-debug.h"
 
+#define UIP_IP_BUF   ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
+
+#define UDP_CLIENT_PORT	8765
+#define UDP_SERVER_PORT	5678
+
+#define UDP_EXAMPLE_ID  190
+
+static struct uip_udp_conn *server_conn;
 static uip_ipaddr_t prefix;
 static uint8_t prefix_set;
 
@@ -387,13 +395,35 @@ set_prefix_64(uip_ipaddr_t *prefix_64)
   memcpy(&prefix, prefix_64, 16);
   memcpy(&ipaddr, prefix_64, 16);
   prefix_set = 1;
-  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
-  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
+  //uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
+  //uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
 
+uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0x00ff, 0xfe00, 1);
+  uip_ds6_addr_add(&ipaddr, 0, ADDR_MANUAL);
   dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
   if(dag != NULL) {
     rpl_set_prefix(dag, &prefix, 64);
     PRINTF("created a new RPL dag\n");
+  }
+}
+static void
+tcpip_handler(void)
+{
+  char *appdata;
+
+  if(uip_newdata()) {
+    appdata = (char *)uip_appdata;
+    appdata[uip_datalen()] = 0;
+    PRINTF("DATA recv '%s' from ", appdata);
+    PRINTF("%d",
+           UIP_IP_BUF->srcipaddr.u8[sizeof(UIP_IP_BUF->srcipaddr.u8) - 1]);
+    PRINTF("\n");
+#if SERVER_REPLY
+    PRINTF("DATA sending reply\n");
+    uip_ipaddr_copy(&server_conn->ripaddr, &UIP_IP_BUF->srcipaddr);
+    uip_udp_packet_send(server_conn, "Reply", sizeof("Reply"));
+    uip_create_unspecified(&server_conn->ripaddr);
+#endif
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -442,12 +472,13 @@ PROCESS_THREAD(border_router_process, ev, data)
 
   while(1) {
     PROCESS_YIELD();
-    if (ev == sensors_event && data == &button_sensor) {
-      PRINTF("Initiating global repair\n");
+    if(ev == tcpip_event) {
+      tcpip_handler();
+    } else if (ev == sensors_event && data == &button_sensor) {
+      PRINTF("Initiaing global repair\n");
       rpl_repair_root(RPL_DEFAULT_INSTANCE);
     }
   }
-
   PROCESS_END();
 }
 /*---------------------------------------------------------------------------*/

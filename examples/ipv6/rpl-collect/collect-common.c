@@ -41,6 +41,7 @@
 #include "dev/serial-line.h"
 #include "dev/leds.h"
 #include "collect-common.h"
+#include "net/mac/csma.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -49,10 +50,13 @@
 static unsigned long time_offset;
 static int send_active = 1;
 
-#ifndef PERIOD
-#define PERIOD 60
+#ifndef GGPERIOD
+#define GGPERIOD 300
 #endif
+#define CLEANUP_DURATION 10
+#define ROUNDS_NUM	2
 #define RANDWAIT (PERIOD)
+
 
 /*---------------------------------------------------------------------------*/
 PROCESS(collect_common_process, "collect common process");
@@ -106,14 +110,18 @@ collect_common_recv(const linkaddr_t *originator, uint8_t seqno, uint8_t hops,
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(collect_common_process, ev, data)
 {
-  static struct etimer period_timer, wait_timer;
+  static struct etimer period_timer, wait_timer, duration_timer, cleanup_timer;
+  static uint16_t round = 0, cleanup_round=1; 
+  static uint32_t gg_sending_interval=0, gg_saved_num_total_sent=0;
+  
   PROCESS_BEGIN();
 
   collect_common_net_init();
-
   /* Send a packet every 60-62 seconds. */
-  etimer_set(&period_timer, CLOCK_SECOND * PERIOD);
-  while(1) {
+  etimer_set(&period_timer, (CLOCK_SECOND/8)<<round);
+  etimer_set(&duration_timer, CLOCK_SECOND * GGPERIOD);
+  while(round < ROUNDS_NUM) {
+  	gg_sending_interval = (CLOCK_SECOND/8)<<round;
     PROCESS_WAIT_EVENT();
     if(ev == serial_line_event_message) {
       char *line;
@@ -155,13 +163,49 @@ PROCESS_THREAD(collect_common_process, ev, data)
     }
     if(ev == PROCESS_EVENT_TIMER) {
       if(data == &period_timer) {
-        etimer_reset(&period_timer);
-        etimer_set(&wait_timer, random_rand() % (CLOCK_SECOND * RANDWAIT));
+        //etimer_reset(&period_timer);
+        etimer_set(&period_timer, gg_sending_interval);
+        etimer_set(&wait_timer, random_rand() % gg_sending_interval);//* RANDWAIT));
+
       } else if(data == &wait_timer) {
         if(send_active) {
           /* Time to send the data */
           collect_common_send();
         }
+      } else if (data == &duration_timer){
+            printf("GUOGE--%u %lu %lu %lu %lu %lu %lu %lu\n", 
+				round+1,
+		  		gg_num_total_sent,
+		  		gg_num_udp_sent,
+		  		gg_num_successfully_transmitted,
+		  		gg_num_dropped_buffer_overflow, 
+				gg_num_dropped_channel_loss,
+				gg_max_num_neighbour_queue,
+				gg_sending_interval);  
+
+			gg_saved_num_total_sent = gg_num_total_sent;
+			clear_queues();
+			etimer_set(&cleanup_timer, CLOCK_SECOND * CLEANUP_DURATION);
+      } else if (data == &cleanup_timer){
+      	printf("GUOGE--cleanup round:%u, num variance:%lu\n", 
+			cleanup_round, gg_num_total_sent - gg_saved_num_total_sent);
+/*		if (cleanup_round++ < 5){
+			clear_queues();
+			etimer_set(&cleanup_timer, CLOCK_SECOND * CLEANUP_DURATION);
+			gg_saved_num_total_sent = gg_num_total_sent;
+			continue;
+		}
+*/
+		gg_num_total_sent=0;
+	  	gg_num_udp_sent=0;
+	  	gg_num_successfully_transmitted=0;
+	  	gg_num_dropped_buffer_overflow=0;
+		gg_num_dropped_channel_loss=0;
+		gg_max_num_neighbour_queue=0;
+		round++;
+		cleanup_round = 1;
+		etimer_set(&period_timer, (CLOCK_SECOND/8)<<round);
+		etimer_set(&duration_timer, CLOCK_SECOND * GGPERIOD);
       }
     }
   }

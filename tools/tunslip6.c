@@ -563,7 +563,7 @@ int
 tun_alloc(char *dev, int tap)
 {
   struct ifreq ifr;
-  int fd, err;
+  int fd, err; 
 
   if( (fd = open("/dev/net/tun", O_RDWR)) < 0 ) {
     perror("can not open /dev/net/tun");
