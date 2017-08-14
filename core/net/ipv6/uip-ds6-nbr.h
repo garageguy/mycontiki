@@ -69,6 +69,7 @@ typedef struct uip_ds6_nbr {
   uip_ipaddr_t ipaddr;
   uint8_t isrouter;
   uint8_t state;
+  uint8_t buff_util;  //GUOGE
 #if UIP_ND6_SEND_NA || UIP_ND6_SEND_RA
   struct stimer reachable;
   struct stimer sendns;

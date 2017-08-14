@@ -73,7 +73,7 @@
 
 
 #ifndef GGPERIOD
-#define GGPERIOD 10 //600
+#define GGPERIOD 60 //600
 #endif
 #define CLEANUP_DURATION 10
 #define ROUNDS_NUM	1 

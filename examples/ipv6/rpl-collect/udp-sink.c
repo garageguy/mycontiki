@@ -49,7 +49,7 @@
 #include "collect-common.h"
 #include "collect-view.h"
 
-#define DEBUG DEBUG_PRINT
+#define DEBUG 0 //DEBUG_PRINT
 #include "net/ip/uip-debug.h"
 
 #define UIP_IP_BUF   ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
@@ -177,7 +177,7 @@ PROCESS_THREAD(udp_server_process, ev, data)
   while(1) {
     PROCESS_YIELD();
     if(ev == tcpip_event) {
-      //tcpip_handler();
+      tcpip_handler();
     } else if (ev == sensors_event && data == &button_sensor) {
       PRINTF("Initiaing global repair\n");
       rpl_repair_root(RPL_DEFAULT_INSTANCE);

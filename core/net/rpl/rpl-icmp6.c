@@ -62,7 +62,7 @@
 #define DEBUG DEBUG_NONE
 
 #include "net/ip/uip-debug.h"
-
+#include "net/mac/csma.h"
 /*---------------------------------------------------------------------------*/
 #define RPL_DIO_GROUNDED                 0x80
 #define RPL_DIO_MOP_SHIFT                3
@@ -294,6 +294,7 @@ dio_input(void)
   int i;
   int len;
   uip_ipaddr_t from;
+  uip_ds6_nbr_t *nbr;	//GUOGE
 
   memset(&dio, 0, sizeof(dio));
 
@@ -458,7 +459,23 @@ dio_input(void)
       PRINTF("RPL: Copying prefix information\n");
       memcpy(&dio.prefix_info.prefix, &buffer[i + 16], 16);
       break;
-    default:
+	  
+	//GUOGE
+	case RPL_OPTION_BUFF_INFO:
+	  //when the node has a preferred parent, it broadcasts the buffer utilization
+	  if(len != 3) {		// 1 + 2
+        PRINTF("RPL: Invalid Buffer occupancy info, len != 1\n");
+		RPL_STAT(rpl_stats.malformed_msgs++);
+        goto discard;
+      }
+
+	  if ((nbr = uip_ds6_nbr_lookup(&from)) != NULL) {
+		nbr->buff_util = buffer[i + 2];
+        PRINTF("GUOGE--RPL: received a neighbor's buffer info %u\n", nbr->buff_util);
+	  }
+	  break;
+
+	default:
       PRINTF("RPL: Unsupported suboption type in DIO: %u\n",
 	(unsigned)subopt_type);
     }
@@ -600,6 +617,17 @@ dio_output(rpl_instance_t *instance, uip_ipaddr_t *uc_addr)
   } else {
     PRINTF("RPL: No prefix to announce (len %d)\n",
            dag->prefix_info.length);
+  }
+
+  //GUOGE
+  //when the node has a preferred parent, it broadcasts the buffer utilization
+  if (dag->preferred_parent != NULL) {
+	buffer[pos++] = RPL_OPTION_BUFF_INFO;
+    buffer[pos++] = 1; 
+	int temp;
+	temp = gg_get_buff_ocp_pref_parent(rpl_get_parent_lladdr(dag->preferred_parent));
+    buffer[pos++] = temp;
+	printf("GUOGE--RPL: sending a neighbor's buffer info %d\n", temp);
   }
 
 #if RPL_LEAF_ONLY

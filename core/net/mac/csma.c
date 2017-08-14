@@ -54,7 +54,6 @@
 #include <string.h>
 
 #include <stdio.h>
-
 #define DEBUG 0
 #if DEBUG
 #include <stdio.h>
@@ -549,6 +548,18 @@ init(void)
   memb_init(&packet_memb);
   memb_init(&metadata_memb);
   memb_init(&neighbor_memb);
+}
+//GUOGE
+uint8_t
+gg_get_buff_ocp_pref_parent(const linkaddr_t *addr){
+	struct neighbor_queue *n = neighbor_queue_from_addr(addr);
+
+	if (n != NULL){
+		return list_length(n->queued_packet_list);
+	} else {
+		return 0;
+	}
+	
 }
 /*---------------------------------------------------------------------------*/
 const struct mac_driver csma_driver = {

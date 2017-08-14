@@ -51,10 +51,10 @@ static unsigned long time_offset;
 static int send_active = 1;
 
 #ifndef GGPERIOD
-#define GGPERIOD 300
+#define GGPERIOD 60
 #endif
 #define CLEANUP_DURATION 10
-#define ROUNDS_NUM	2
+#define ROUNDS_NUM	1
 #define RANDWAIT (PERIOD)
 
 
@@ -189,13 +189,14 @@ PROCESS_THREAD(collect_common_process, ev, data)
       } else if (data == &cleanup_timer){
       	printf("GUOGE--cleanup round:%u, num variance:%lu\n", 
 			cleanup_round, gg_num_total_sent - gg_saved_num_total_sent);
-/*		if (cleanup_round++ < 5){
+		if (gg_num_total_sent - gg_saved_num_total_sent > 10){
+			cleanup_round++;
 			clear_queues();
 			etimer_set(&cleanup_timer, CLOCK_SECOND * CLEANUP_DURATION);
 			gg_saved_num_total_sent = gg_num_total_sent;
 			continue;
 		}
-*/
+
 		gg_num_total_sent=0;
 	  	gg_num_udp_sent=0;
 	  	gg_num_successfully_transmitted=0;

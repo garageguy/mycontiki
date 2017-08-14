@@ -94,6 +94,7 @@ tcpip_handler(void)
   }
 }
 /*---------------------------------------------------------------------------*/
+#ifdef DEBUG
 static void
 send_packet(void *ptr)
 {
@@ -123,6 +124,7 @@ send_packet(void *ptr)
                         &server_ipaddr, UIP_HTONS(UDP_SERVER_PORT));
 }
 /*---------------------------------------------------------------------------*/
+
 static void
 print_local_addresses(void)
 {
@@ -143,6 +145,7 @@ print_local_addresses(void)
     }
   }
 }
+#endif
 /*---------------------------------------------------------------------------*/
 static void
 set_global_address(void)
@@ -198,10 +201,10 @@ PROCESS_THREAD(udp_client_process, ev, data)
   PRINTF("UDP client process started nbr:%d routes:%d\n",
          NBR_TABLE_CONF_MAX_NEIGHBORS, UIP_CONF_MAX_ROUTES);
 
-  print_local_addresses();
+  //print_local_addresses();
 
   /* new connection with remote host */
-  client_conn = udp_new(NULL, UIP_HTONS(UDP_SERVER_PORT), NULL); 
+/*  client_conn = udp_new(NULL, UIP_HTONS(UDP_SERVER_PORT), NULL); 
   if(client_conn == NULL) {
     PRINTF("No UDP connection available, exiting the process!\n");
     PROCESS_EXIT();
@@ -214,21 +217,21 @@ PROCESS_THREAD(udp_client_process, ev, data)
 	UIP_HTONS(client_conn->lport), UIP_HTONS(client_conn->rport));
 
   /* initialize serial line */
-  uart1_set_input(serial_line_input_byte);
+  //uart1_set_input(serial_line_input_byte);
   serial_line_init();
 
-
+/*
 #if WITH_COMPOWER
   powertrace_sniff(POWERTRACE_ON);
 #endif
-
+*/
   etimer_set(&periodic, SEND_INTERVAL);
   while(1) {
     PROCESS_YIELD();
     if(ev == tcpip_event) {
       tcpip_handler();
     }
-
+/*
     if(ev == serial_line_event_message && data != NULL) {
       char *str;
       str = data;
@@ -257,16 +260,16 @@ PROCESS_THREAD(udp_client_process, ev, data)
           /* PRINT6ADDR(&r->ipaddr); */
           /* PRINTF(" -> "); */
           /* PRINT6ADDR(nexthop); */
-          PRINTF(" lt:%lu\n", r->state.lifetime);
+/*          PRINTF(" lt:%lu\n", r->state.lifetime);
 
         }
       }
     }
-
+*/
     if(etimer_expired(&periodic)) {
       etimer_reset(&periodic);
-      ctimer_set(&backoff_timer, SEND_TIME, send_packet, NULL);
-
+     // ctimer_set(&backoff_timer, SEND_TIME, send_packet, NULL);
+/*
 #if WITH_COMPOWER
       if (print == 0) {
 	powertrace_print("#P");
@@ -275,7 +278,7 @@ PROCESS_THREAD(udp_client_process, ev, data)
 	print = 0;
       }
 #endif
-
+*/
     }
   }
 

@@ -189,6 +189,7 @@
 #endif
 
 #define UIP_CONF_ND6_SEND_RA            0
+#define UIP_CONF_ND6_SEND_NA            0
 #define UIP_CONF_ND6_REACHABLE_TIME     600000
 #define UIP_CONF_ND6_RETRANS_TIMER      10000
 
