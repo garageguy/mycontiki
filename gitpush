@@ -1,4 +1,3 @@
 git add .
 git commit -m newest
-git push garageguy:bgi90okmnj
-
+ git push https://garageguy:bgi90okmnj@github.com/garageguy/mycontiki.git
