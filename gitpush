@@ -1,2 +1,4 @@
 git add .
+git commit -m newest
+git push garageguy:bgi90okmnj
 
