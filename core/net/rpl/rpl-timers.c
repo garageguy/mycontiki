@@ -48,6 +48,7 @@
 #include "net/ipv6/multicast/uip-mcast6.h"
 #include "lib/random.h"
 #include "sys/ctimer.h"
+#include "net/ip/tcpip.h"
 
 #define DEBUG DEBUG_NONE
 #include "net/ip/uip-debug.h"
@@ -67,6 +68,8 @@ clock_time_t RPL_PROBING_DELAY_FUNC(rpl_dag_t *dag);
 
 /*---------------------------------------------------------------------------*/
 static struct ctimer periodic_timer;
+//GUOGE
+static struct ctimer checking_buff_timer;
 
 static void handle_periodic_timer(void *ptr);
 static void new_dio_interval(rpl_instance_t *instance);
@@ -182,7 +185,7 @@ handle_dio_timer(void *ptr)
     } else {
       PRINTF("RPL: Suppressing DIO transmission (%d >= %d)\n",
              instance->dio_counter, instance->dio_redundancy);
-    }
+    } 
     instance->dio_send = 0;
     PRINTF("RPL: Scheduling DIO timer %lu ticks in future (sent)\n",
            instance->dio_next_delay);
@@ -494,4 +497,23 @@ rpl_schedule_probing(rpl_instance_t *instance)
                   handle_probing_timer, instance);
 }
 #endif /* RPL_WITH_PROBING */
+/*---------------------------------------------------------------------------*/
+//GUOGE--set the timer for checking average buffer occupancy
+static void
+gg_handle_checking_buff_timer(void *ptr)
+{
+  printf("GUOGE--buff occupancy: %lu, %lu\n",
+  			gg_num_sentto_preferred_parent,
+			gg_num_total_buffer);
+  gg_num_sentto_preferred_parent = 0;
+  gg_num_total_buffer = 0;
+  ctimer_reset(&checking_buff_timer);
+}
+
+void
+gg_set_checking_buff_timer(){
+
+  ctimer_set(&checking_buff_timer, RPL_CHECKING_BUFF_INTERVAL, gg_handle_checking_buff_timer, NULL);
+}
+
 /** @}*/

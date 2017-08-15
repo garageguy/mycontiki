@@ -338,4 +338,8 @@
 #define RPL_DIS_START_DELAY             5
 #endif
 
+
+//GUOGE
+#define	RPL_CHECKING_BUFF_INTERVAL		1
+
 #endif /* RPL_CONF_H */

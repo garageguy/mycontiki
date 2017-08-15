@@ -668,7 +668,7 @@ tcpip_ipv6_output(void)
 	{
 	  //rpl_instance_t *instance;
 	  rpl_dag_t *dag;
-	  rpl_parent_t *p_parent£»
+	  rpl_parent_t *p_parent;
 	  
 	  //instance = rpl_get_default_instance();
 	  dag = rpl_get_any_dag();
