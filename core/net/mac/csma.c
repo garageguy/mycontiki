@@ -450,6 +450,8 @@ send_packet(mac_callback_t sent, void *ptr)
     }
   }
 
+
+
   if(n != NULL) {
     /* Add packet to the neighbor's queue */
     if(list_length(n->queued_packet_list) < CSMA_MAX_PACKET_PER_NEIGHBOR) {

@@ -69,6 +69,10 @@
 
 #include "contiki.h"
 
+//GUOGE
+extern uint32_t gg_num_sentto_preferred_parent;
+extern uint32_t gg_num_total_buffer;
+
 struct uip_conn;
 
 struct tcpip_uipstate {

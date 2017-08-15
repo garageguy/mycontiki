@@ -82,6 +82,10 @@ process_event_t tcpip_event;
 process_event_t tcpip_icmp6_event;
 #endif /* UIP_CONF_ICMP6 */
 
+//GUOGE
+uint32_t gg_num_sentto_preferred_parent=0;
+uint32_t gg_num_total_buffer=0;
+
 /* Periodic check of active connections. */
 static struct etimer periodic;
 
@@ -660,6 +664,22 @@ tcpip_ipv6_output(void)
 
     /* End of next hop determination */
 
+	//GUOGE--discern whether it's destinated to the preferred parent
+	{
+	  //rpl_instance_t *instance;
+	  rpl_dag_t *dag;
+	  rpl_parent_t *p_parent£»
+	  
+	  //instance = rpl_get_default_instance();
+	  dag = rpl_get_any_dag();
+	  p_parent = dag->preferred_parent;
+	  if((dag != NULL) && (p_parent != NULL)
+  		&& (uip_ipaddr_cmp(rpl_get_parent_ipaddr(p_parent), nexthop))){
+			gg_num_sentto_preferred_parent++;
+			gg_num_total_buffer += gg_get_buff_ocp_pref_parent(rpl_get_parent_lladdr(p_parent));
+		}
+    }
+		    
     nbr = uip_ds6_nbr_lookup(nexthop);
     if(nbr == NULL) {
 #if UIP_ND6_SEND_NA
