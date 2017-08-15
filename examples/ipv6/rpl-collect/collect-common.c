@@ -54,7 +54,8 @@ static int send_active = 1;
 #define GGPERIOD 60
 #endif
 #define CLEANUP_DURATION 10
-#define ROUNDS_NUM	1
+#define ROUNDS_NUM	10
+#define CBR			1
 #define RANDWAIT (PERIOD)
 
 
@@ -111,7 +112,7 @@ collect_common_recv(const linkaddr_t *originator, uint8_t seqno, uint8_t hops,
 PROCESS_THREAD(collect_common_process, ev, data)
 {
   static struct etimer period_timer, wait_timer, duration_timer, cleanup_timer;
-  static uint16_t round = 0, cleanup_round=1; 
+  static uint16_t round = CBR, cleanup_round=1; 
   static uint32_t gg_sending_interval=0, gg_saved_num_total_sent=0;
   
   PROCESS_BEGIN();

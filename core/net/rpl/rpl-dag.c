@@ -255,8 +255,6 @@ rpl_set_preferred_parent(rpl_dag_t *dag, rpl_parent_t *p)
     nbr_table_lock(rpl_parents, p);
     dag->preferred_parent = p;
 
-	//GUOGE--set buffer checking timer
-	gg_set_checking_buff_timer();
   }
 }
 /*---------------------------------------------------------------------------*/

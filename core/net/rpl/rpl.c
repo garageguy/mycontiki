@@ -336,6 +336,8 @@ rpl_init(void)
 
   rpl_dag_init();
   rpl_reset_periodic_timer();
+  //GUOGE
+  gg_set_checking_buff_timer();
   rpl_icmp6_register_handlers();
 
   /* add rpl multicast address */

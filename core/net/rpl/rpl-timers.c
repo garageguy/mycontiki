@@ -512,7 +512,7 @@ gg_handle_checking_buff_timer(void *ptr)
 
 void
 gg_set_checking_buff_timer(){
-
+printf("guogeguoge\n");
   ctimer_set(&checking_buff_timer, RPL_CHECKING_BUFF_INTERVAL, gg_handle_checking_buff_timer, NULL);
 }
 
