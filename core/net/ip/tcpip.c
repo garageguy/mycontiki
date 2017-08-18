@@ -41,6 +41,7 @@
 #include "contiki-net.h"
 #include "net/ip/uip-split.h"
 #include "net/ip/uip-packetqueue.h"
+#include "net/mac/csma.h"
 
 #if NETSTACK_CONF_WITH_IPV6
 #include "net/ipv6/uip-nd6.h"
@@ -54,7 +55,7 @@
 
 #include <string.h>
 
-#define DEBUG 1
+#define DEBUG 0
 #include "net/ip/uip-debug.h"
 
 #if UIP_LOGGING
@@ -670,6 +671,7 @@ tcpip_ipv6_output(void)
 	  rpl_dag_t *dag;
 	  rpl_parent_t *p_parent;
 	  
+	gg_num_total_sent++;
 	  //instance = rpl_get_default_instance();
 	  dag = rpl_get_any_dag();
 	  p_parent = dag->preferred_parent;

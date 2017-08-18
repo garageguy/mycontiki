@@ -1616,4 +1616,30 @@ rpl_process_dio(uip_ipaddr_t *from, rpl_dio_t *dio)
   p->dtsn = dio->dtsn;
 }
 /*---------------------------------------------------------------------------*/
+rpl_parent_t *
+gg_select_load_balacing_parent(rpl_dag_t *dag)
+{
+  rpl_parent_t *p;
+  rpl_of_t *of;
+  rpl_parent_t *suboptimal = NULL;
+
+  if(dag == NULL || dag->instance == NULL || dag->instance->of == NULL) {
+    return NULL;
+  }
+
+  of = dag->instance->of;
+  /* Search for the suboptimal parent according to the OF */
+  for(p = nbr_table_head(rpl_parents); p != NULL; p = nbr_table_next(rpl_parents, p)) {
+
+    if(p->dag != dag || p == dag->preferred_parent 
+		|| p->rank == INFINITE_RANK || p->rank > dag->rank
+		|| p->flags & GG_RPL_PARENT_FLAG_BUFFER_THRESHOLD_REACHED) {
+      continue;
+    }
+
+    suboptimal= of->best_parent(suboptimal, p);
+  }
+
+  return suboptimal;
+}
 /** @} */

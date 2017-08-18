@@ -55,7 +55,7 @@ static int send_active = 1;
 #endif
 #define CLEANUP_DURATION 10
 #define ROUNDS_NUM	10
-#define CBR			1
+#define CBR			5
 #define RANDWAIT (PERIOD)
 
 

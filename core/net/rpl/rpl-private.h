@@ -400,4 +400,7 @@ void rpl_poison_routes(rpl_dag_t *, rpl_parent_t *);
 
 rpl_instance_t *rpl_get_default_instance(void);
 
+
+//GUOGE
+rpl_parent_t *gg_select_load_balacing_parent(rpl_dag_t *);
 #endif /* RPL_PRIVATE_H */

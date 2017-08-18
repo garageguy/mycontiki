@@ -87,7 +87,7 @@ LIST(notificationlist);
 #endif
 
 #undef DEBUG
-#define DEBUG 1 //DEBUG_NONE
+#define DEBUG DEBUG_NONE
 #include "net/ip/uip-debug.h"
 
 /*---------------------------------------------------------------------------*/

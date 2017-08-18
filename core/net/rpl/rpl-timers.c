@@ -49,8 +49,11 @@
 #include "lib/random.h"
 #include "sys/ctimer.h"
 #include "net/ip/tcpip.h"
+#include "net/mac/csma.h"
 
-#define DEBUG DEBUG_NONE
+#define	GG_BUFFER_OCCUPANCY_THRESHOLD	75
+
+#define DEBUG 1//DEBUG_NONE
 #include "net/ip/uip-debug.h"
 
 /* A configurable function called after update of the RPL DIO interval */
@@ -502,11 +505,28 @@ rpl_schedule_probing(rpl_instance_t *instance)
 static void
 gg_handle_checking_buff_timer(void *ptr)
 {
-  printf("GUOGE--buff occupancy: %lu, %lu\n",
+  rpl_dag_t *dag;
+  rpl_parent_t *p;
+
+  if ((gg_num_total_buffer / gg_num_sentto_preferred_parent / QUEUEBUF_NUM) * 100 > GG_BUFFER_OCCUPANCY_THRESHOLD ) {
+	//choose the secondary parent 
+	dag = rpl_get_any_dag();
+	if ( (dag != NULL) && ((p = gg_select_load_balacing_parent(dag)) != NULL )) {;
+		//set the flag
+		dag->gg_buffer_aboutto_overflow = 1;
+		dag->gg_suboptimal_parent = p;
+	}
+  }
+  
+
+  printf("GUOGE--buff occupancy: total:%lu, to_prefer:%lu, tot_buff:%lu, dropped_buff:%lu\n",
+  			gg_num_total_sent,
   			gg_num_sentto_preferred_parent,
-			gg_num_total_buffer);
+			gg_num_total_buffer,
+			gg_num_dropped_buffer_overflow);
   gg_num_sentto_preferred_parent = 0;
   gg_num_total_buffer = 0;
+  gg_num_dropped_buffer_overflow = 0;
   ctimer_reset(&checking_buff_timer);
 }
 

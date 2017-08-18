@@ -408,7 +408,7 @@ send_packet(mac_callback_t sent, void *ptr)
   const linkaddr_t *addr = packetbuf_addr(PACKETBUF_ADDR_RECEIVER);
 
   //GUOGE
-  gg_num_total_sent++;
+  //gg_num_total_sent++;
     PRINTF("GUOGE--CSMA: send to %02x%02x:%02x%02x:%02x%02x:%02x%02x\n",
                packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[0],
                packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[1],
@@ -482,7 +482,8 @@ send_packet(mac_callback_t sent, void *ptr)
               list_add(n->queued_packet_list, q);
             }
 
-            PRINTF("csma: send_packet, queue length %d, free packets %d\n",
+            //PRINTF
+            printf("csma: send_packet, queue length %d, free packets %d\n",
                    list_length(n->queued_packet_list), memb_numfree(&packet_memb));
             /* If q is the first packet in the neighbor's queue, send asap */
             if(list_head(n->queued_packet_list) == q) {

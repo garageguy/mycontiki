@@ -110,6 +110,7 @@ struct rpl_dag;
 /*---------------------------------------------------------------------------*/
 #define RPL_PARENT_FLAG_UPDATED           0x1
 #define RPL_PARENT_FLAG_LINK_METRIC_VALID 0x2
+#define GG_RPL_PARENT_FLAG_BUFFER_THRESHOLD_REACHED	0x4
 
 struct rpl_parent {
   struct rpl_dag *dag;
@@ -142,6 +143,8 @@ struct rpl_dag {
   /* live data for the DAG */
   uint8_t joined;
   rpl_parent_t *preferred_parent;
+  uint8_t gg_buffer_aboutto_overflow;
+  rpl_parent_t *gg_suboptimal_parent;
   rpl_rank_t rank;
   struct rpl_instance *instance;
   rpl_prefix_t prefix_info;

@@ -48,7 +48,7 @@
 #define UDP_CLIENT_PORT 8775
 #define UDP_SERVER_PORT 5688
 
-#define DEBUG DEBUG_PRINT
+#define DEBUG 0
 #include "net/ip/uip-debug.h"
 
 static struct uip_udp_conn *client_conn;
