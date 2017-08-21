@@ -22,6 +22,19 @@ struct collect_view_data_msg {
   uint16_t sensors[10];
 };
 
+  struct gg_collect_msg {
+	  uint16_t send_time;
+	  uint32_t cpu;
+	  uint32_t lpm;
+	  uint32_t transmit;
+	  uint32_t listen;	
+  };
+
+extern  uint32_t   gg_total_cpu;
+extern  uint32_t   gg_total_lpm;
+extern  uint32_t   gg_total_transmit;
+extern  uint32_t   gg_total_listen;
+
 void collect_view_construct_message(struct collect_view_data_msg *msg,
                                     const linkaddr_t *parent,
                                     uint16_t etx_to_parent,

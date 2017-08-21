@@ -50,10 +50,9 @@
 #include "sys/ctimer.h"
 #include "net/ip/tcpip.h"
 #include "net/mac/csma.h"
+#include "net/queuebuf.h"
 
-#define	GG_BUFFER_OCCUPANCY_THRESHOLD	75
-
-#define DEBUG 1//DEBUG_NONE
+#define DEBUG 1// DEBUG_NONE
 #include "net/ip/uip-debug.h"
 
 /* A configurable function called after update of the RPL DIO interval */
@@ -83,6 +82,7 @@ static uint16_t next_dis;
 /* dio_send_ok is true if the node is ready to send DIOs */
 static uint8_t dio_send_ok;
 
+static uint8_t gg_buffer_recovery_sent;
 /*---------------------------------------------------------------------------*/
 static void
 handle_periodic_timer(void *ptr)
@@ -179,7 +179,8 @@ handle_dio_timer(void *ptr)
   }
 
   if(instance->dio_send) {
-    /* send DIO if counter is less than desired redundancy */
+      printf("GUOGE--RPL: DIO transmission (counter:%d;redun:%d)\n",
+             instance->dio_counter, instance->dio_redundancy);    /* send DIO if counter is less than desired redundancy */
     if(instance->dio_redundancy != 0 && instance->dio_counter < instance->dio_redundancy) {
 #if RPL_CONF_STATS
       instance->dio_totsend++;
@@ -507,32 +508,52 @@ gg_handle_checking_buff_timer(void *ptr)
 {
   rpl_dag_t *dag;
   rpl_parent_t *p;
+  uint16_t buff_occp;
 
-  if ((gg_num_total_buffer / gg_num_sentto_preferred_parent / QUEUEBUF_NUM) * 100 > GG_BUFFER_OCCUPANCY_THRESHOLD ) {
-	//choose the secondary parent 
-	dag = rpl_get_any_dag();
-	if ( (dag != NULL) && ((p = gg_select_load_balacing_parent(dag)) != NULL )) {;
-		//set the flag
-		dag->gg_buffer_aboutto_overflow = 1;
-		dag->gg_suboptimal_parent = p;
-	}
-  }
   
+	  
+  if ( (gg_num_sentto_preferred_parent != 0) && (gg_num_total_buffer != 0) ){
+	  buff_occp = gg_num_total_buffer  * 100 / gg_num_sentto_preferred_parent / QUEUEBUF_NUM;
+	  dag = rpl_get_any_dag();
+	  if (dag != NULL) {
+	  	  dag->gg_buffer_occupancy = buff_occp;
+		  if (buff_occp > GG_BUFFER_OCCUPANCY_THRESHOLD) {
+		  	dio_output(dag->instance, NULL);
+			printf("GUOGE--BUFFER THRESHOLD ARE SIGNALED!!!!!\n");
+			gg_buffer_recovery_sent = 0;
+		  } else if (!gg_buffer_recovery_sent){
+		    //send only once about the buffer recovery
+		  	dio_output(dag->instance, NULL);
+			printf("GUOGE--buffer occupancy recover to the normal level\n");
+			gg_buffer_recovery_sent = 1;
+		  }
+/*				printf("GUOGE--BO is %u%%, find a suboptimal parent:%3u\n",
+					buff_occp,
+					rpl_get_parent_ipaddr(p)->u8[15]);
+	  	} else if (buff_occp <= GG_BUFFER_OCCUPANCY_THRESHOLD) {
+			printf("GUOGE--delete a suboptimal parent:%3u\n",
+				rpl_get_parent_ipaddr(dag->gg_suboptimal_parent)->u8[15]);
+			dag->gg_suboptimal_parent = NULL;
+*/		   
+	  }
 
+  }  
+  	
+/*
   printf("GUOGE--buff occupancy: total:%lu, to_prefer:%lu, tot_buff:%lu, dropped_buff:%lu\n",
   			gg_num_total_sent,
   			gg_num_sentto_preferred_parent,
 			gg_num_total_buffer,
 			gg_num_dropped_buffer_overflow);
+*/
   gg_num_sentto_preferred_parent = 0;
   gg_num_total_buffer = 0;
   gg_num_dropped_buffer_overflow = 0;
   ctimer_reset(&checking_buff_timer);
 }
 
-void
+void 
 gg_set_checking_buff_timer(){
-printf("guogeguoge\n");
   ctimer_set(&checking_buff_timer, RPL_CHECKING_BUFF_INTERVAL, gg_handle_checking_buff_timer, NULL);
 }
 

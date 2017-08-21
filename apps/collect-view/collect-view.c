@@ -45,6 +45,10 @@
 
 #include <string.h>
 
+uint32_t   gg_total_cpu;
+uint32_t   gg_total_lpm;
+uint32_t   gg_total_transmit;
+uint32_t   gg_total_listen;
 /*---------------------------------------------------------------------------*/
 void
 collect_view_construct_message(struct collect_view_data_msg *msg,
@@ -103,3 +107,36 @@ collect_view_construct_message(struct collect_view_data_msg *msg,
   collect_view_arch_read_sensors(msg);
 }
 /*---------------------------------------------------------------------------*/
+void
+gg_collect_view_construct_message(struct gg_collect_msg *msg)
+{
+  static unsigned long last_cpu, last_lpm, last_transmit, last_listen;
+  unsigned long cpu, lpm, transmit, listen;
+
+
+  msg->send_time = clock_seconds();
+
+  energest_flush();
+
+  cpu = energest_type_time(ENERGEST_TYPE_CPU) - last_cpu;
+  lpm = energest_type_time(ENERGEST_TYPE_LPM) - last_lpm;
+  transmit = energest_type_time(ENERGEST_TYPE_TRANSMIT) - last_transmit;
+  listen = energest_type_time(ENERGEST_TYPE_LISTEN) - last_listen;
+
+  msg->cpu = cpu;
+  msg->lpm = lpm;
+  msg->transmit = transmit;
+  msg->listen = listen;
+
+  gg_total_cpu += cpu;
+  gg_total_lpm += lpm;
+  gg_total_transmit += transmit;
+  gg_total_listen += listen;
+
+  last_cpu = energest_type_time(ENERGEST_TYPE_CPU);
+  last_lpm = energest_type_time(ENERGEST_TYPE_LPM);
+  last_transmit = energest_type_time(ENERGEST_TYPE_TRANSMIT);
+  last_listen = energest_type_time(ENERGEST_TYPE_LISTEN);
+}
+/*---------------------------------------------------------------------------*/
+

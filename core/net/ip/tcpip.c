@@ -86,6 +86,7 @@ process_event_t tcpip_icmp6_event;
 //GUOGE
 uint32_t gg_num_sentto_preferred_parent=0;
 uint32_t gg_num_total_buffer=0;
+static uint8_t load_balanced = 0;
 
 /* Periodic check of active connections. */
 static struct etimer periodic;
@@ -669,9 +670,9 @@ tcpip_ipv6_output(void)
 	{
 	  //rpl_instance_t *instance;
 	  rpl_dag_t *dag;
-	  rpl_parent_t *p_parent;
+	  rpl_parent_t *p_parent, *s_parent;
 	  
-	gg_num_total_sent++;
+	  gg_num_total_sent++;
 	  //instance = rpl_get_default_instance();
 	  dag = rpl_get_any_dag();
 	  p_parent = dag->preferred_parent;
@@ -679,6 +680,21 @@ tcpip_ipv6_output(void)
   		&& (uip_ipaddr_cmp(rpl_get_parent_ipaddr(p_parent), nexthop))){
 			gg_num_sentto_preferred_parent++;
 			gg_num_total_buffer += gg_get_buff_ocp_pref_parent(rpl_get_parent_lladdr(p_parent));
+
+			if (p_parent->gg_buffer_occupancy > GG_BUFFER_OCCUPANCY_THRESHOLD) {
+				if ((s_parent = gg_select_load_balacing_parent(dag)) != NULL ) {
+					//distribute some proportion of traffic to the suboptimal p
+					dag->gg_suboptimal_parent = s_parent;
+					printf("GUOGE--load balancing to %3u\n", 
+						rpl_get_parent_ipaddr(s_parent)->u8[15]);
+					if (!load_balanced) { // half traffic is distributed
+						load_balanced = 1;
+						nexthop = rpl_get_parent_ipaddr(s_parent);
+					} else {
+						load_balanced = 0;
+					}
+				}
+			}			
 		}
     }
 		    

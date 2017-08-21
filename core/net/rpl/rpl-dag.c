@@ -102,7 +102,7 @@ rpl_print_neighbor_list(void)
         default_instance->mop, default_instance->of->ocp, curr_rank, curr_dio_interval, uip_ds6_nbr_num());
     while(p != NULL) {
       const struct link_stats *stats = rpl_get_parent_link_stats(p);
-      printf("RPL: nbr %3u %5u, %5u => %5u -- %2u %c%c (last tx %u min ago)\n",
+      printf("RPL: nbr %3u %5u, %5u => %5u -- %2u %c%c%c (last tx %u min ago), BO:%u\n",
           rpl_get_parent_ipaddr(p)->u8[15],
           p->rank,
           rpl_get_parent_link_metric(p),
@@ -110,7 +110,9 @@ rpl_print_neighbor_list(void)
           stats != NULL ? stats->freshness : 0,
           link_stats_is_fresh(stats) ? 'f' : ' ',
           p == default_instance->current_dag->preferred_parent ? 'p' : ' ',
-          (unsigned)((clock_now - stats->last_tx_time) / (60 * CLOCK_SECOND))
+          p == default_instance->current_dag->gg_suboptimal_parent ? 's' : ' ',
+          (unsigned)((clock_now - stats->last_tx_time) / (60 * CLOCK_SECOND)),
+          p->gg_buffer_occupancy
       );
       p = nbr_table_next(rpl_parents, p);
     }
@@ -254,6 +256,9 @@ rpl_set_preferred_parent(rpl_dag_t *dag, rpl_parent_t *p)
     nbr_table_unlock(rpl_parents, dag->preferred_parent);
     nbr_table_lock(rpl_parents, p);
     dag->preferred_parent = p;
+	gg_num_total_buffer = 0;
+	gg_num_sentto_preferred_parent = 0;
+	printf("GUOGE--change preferred parent, clear the statistics of buffer occupancy\n");
 
   }
 }
@@ -1577,6 +1582,9 @@ rpl_process_dio(uip_ipaddr_t *from, rpl_dio_t *dio)
     }
   }
   p->rank = dio->rank;
+  //GUOGE
+  p->gg_buffer_occupancy = dio->gg_buffer_occupancy;
+  printf("GUOGE--set the buff occp of the parent:%u\n",dio->gg_buffer_occupancy);
 
   if(dio->rank == INFINITE_RANK && p == dag->preferred_parent) {
     /* Our preferred parent advertised an infinite rank, reset DIO timer */
@@ -1614,6 +1622,7 @@ rpl_process_dio(uip_ipaddr_t *from, rpl_dio_t *dio)
     uip_ds6_defrt_add(from, RPL_DEFAULT_ROUTE_INFINITE_LIFETIME ? 0 : RPL_LIFETIME(instance, instance->default_lifetime));
   }
   p->dtsn = dio->dtsn;
+
 }
 /*---------------------------------------------------------------------------*/
 rpl_parent_t *
@@ -1632,8 +1641,8 @@ gg_select_load_balacing_parent(rpl_dag_t *dag)
   for(p = nbr_table_head(rpl_parents); p != NULL; p = nbr_table_next(rpl_parents, p)) {
 
     if(p->dag != dag || p == dag->preferred_parent 
-		|| p->rank == INFINITE_RANK || p->rank > dag->rank
-		|| p->flags & GG_RPL_PARENT_FLAG_BUFFER_THRESHOLD_REACHED) {
+		|| p->rank >= dag->rank	
+		|| p->gg_buffer_occupancy > dag->preferred_parent->gg_buffer_occupancy) {
       continue;
     }
 

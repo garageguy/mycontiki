@@ -1139,7 +1139,7 @@ uip_process(uint8_t flag)
     goto drop;
   }
 
-  PRINTF("IPv6 packet received from ");
+  PRINTF("GUOGE--IPv6 packet received from ");
   PRINT6ADDR(&UIP_IP_BUF->srcipaddr);
   PRINTF(" to ");
   PRINT6ADDR(&UIP_IP_BUF->destipaddr);

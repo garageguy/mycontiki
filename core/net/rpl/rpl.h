@@ -120,6 +120,7 @@ struct rpl_parent {
   rpl_rank_t rank;
   uint8_t dtsn;
   uint8_t flags;
+  uint8_t gg_buffer_occupancy; //GUOGE
 };
 typedef struct rpl_parent rpl_parent_t;
 /*---------------------------------------------------------------------------*/
@@ -143,7 +144,7 @@ struct rpl_dag {
   /* live data for the DAG */
   uint8_t joined;
   rpl_parent_t *preferred_parent;
-  uint8_t gg_buffer_aboutto_overflow;
+  uint8_t gg_buffer_occupancy;
   rpl_parent_t *gg_suboptimal_parent;
   rpl_rank_t rank;
   struct rpl_instance *instance;

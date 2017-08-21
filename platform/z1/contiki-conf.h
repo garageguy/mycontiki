@@ -74,7 +74,7 @@
 #define XMAC_CONF_ANNOUNCEMENTS               0
 
 #ifndef QUEUEBUF_CONF_NUM
-#define QUEUEBUF_CONF_NUM                     8
+#define QUEUEBUF_CONF_NUM                     4
 #endif
 
 #else /* NETSTACK_CONF_WITH_IPV6 */

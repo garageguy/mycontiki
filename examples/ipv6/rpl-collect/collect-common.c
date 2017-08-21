@@ -41,6 +41,7 @@
 #include "dev/serial-line.h"
 #include "dev/leds.h"
 #include "collect-common.h"
+#include "collect-view.h"
 #include "net/mac/csma.h"
 
 #include <stdio.h>
@@ -53,10 +54,10 @@ static int send_active = 1;
 #ifndef GGPERIOD
 #define GGPERIOD 60
 #endif
+#define DAG_CONSTRUCTION_DURATION 15
 #define CLEANUP_DURATION 10
-#define ROUNDS_NUM	10
-#define CBR			5
-#define RANDWAIT (PERIOD)
+#define ROUNDS_NUM	15
+#define CBR			3 
 
 
 /*---------------------------------------------------------------------------*/
@@ -85,6 +86,7 @@ collect_common_set_send_active(int active)
   send_active = active;
 }
 /*---------------------------------------------------------------------------*/
+
 void
 collect_common_recv(const linkaddr_t *originator, uint8_t seqno, uint8_t hops,
                     uint8_t *payload, uint16_t payload_len)
@@ -107,6 +109,7 @@ collect_common_recv(const linkaddr_t *originator, uint8_t seqno, uint8_t hops,
   }
   printf("\n");
   leds_blink();
+
 }
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(collect_common_process, ev, data)
@@ -119,7 +122,7 @@ PROCESS_THREAD(collect_common_process, ev, data)
 
   collect_common_net_init();
   /* Send a packet every 60-62 seconds. */
-  etimer_set(&period_timer, (CLOCK_SECOND/8)<<round);
+  etimer_set(&period_timer, DAG_CONSTRUCTION_DURATION * CLOCK_SECOND );
   etimer_set(&duration_timer, CLOCK_SECOND * GGPERIOD);
   while(round < ROUNDS_NUM) {
   	gg_sending_interval = (CLOCK_SECOND/8)<<round;
@@ -166,7 +169,8 @@ PROCESS_THREAD(collect_common_process, ev, data)
       if(data == &period_timer) {
         //etimer_reset(&period_timer);
         etimer_set(&period_timer, gg_sending_interval);
-        etimer_set(&wait_timer, random_rand() % gg_sending_interval);//* RANDWAIT));
+        etimer_set(&wait_timer, 
+			random_rand() % gg_sending_interval);//* RANDWAIT));
 
       } else if(data == &wait_timer) {
         if(send_active) {
@@ -174,15 +178,18 @@ PROCESS_THREAD(collect_common_process, ev, data)
           collect_common_send();
         }
       } else if (data == &duration_timer){
-            printf("GUOGE--%u %lu %lu %lu %lu %lu %lu %lu\n", 
+            printf("GUOGE--%u %lu %lu %lu %lu %lu %lu\n", 
 				round+1,
-		  		gg_num_total_sent,
+		  		//gg_num_total_sent,
 		  		gg_num_udp_sent,
 		  		gg_num_successfully_transmitted,
 		  		gg_num_dropped_buffer_overflow, 
 				gg_num_dropped_channel_loss,
 				gg_max_num_neighbour_queue,
 				gg_sending_interval);  
+			printf("GUOGE--energy consumption, CPU:%lu, LPM:%lu, TX:%lu, LI:%lu\n",
+				gg_total_cpu, gg_total_lpm, gg_total_transmit, gg_total_listen);
+			print_average_delay_of_nodes();
 
 			gg_saved_num_total_sent = gg_num_total_sent;
 			clear_queues();
@@ -190,14 +197,14 @@ PROCESS_THREAD(collect_common_process, ev, data)
       } else if (data == &cleanup_timer){
       	printf("GUOGE--cleanup round:%u, num variance:%lu\n", 
 			cleanup_round, gg_num_total_sent - gg_saved_num_total_sent);
-		if (gg_num_total_sent - gg_saved_num_total_sent > 10){
+/*		if (gg_num_total_sent - gg_saved_num_total_sent > 10){
 			cleanup_round++;
 			clear_queues();
 			etimer_set(&cleanup_timer, CLOCK_SECOND * CLEANUP_DURATION);
 			gg_saved_num_total_sent = gg_num_total_sent;
 			continue;
 		}
-
+*/
 		gg_num_total_sent=0;
 	  	gg_num_udp_sent=0;
 	  	gg_num_successfully_transmitted=0;

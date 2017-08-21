@@ -82,5 +82,5 @@
 //guoge
 #define CSMA_CONF_MAX_NEIGHBOR_QUEUES	16
 #define	GG_BUFFER_OCCUPANCY_THRESHOLD	50
-#define NODES_NUM						31
+
 #endif /* PROJECT_CONF_H_ */

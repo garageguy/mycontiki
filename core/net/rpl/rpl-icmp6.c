@@ -59,7 +59,7 @@
 #include <limits.h>
 #include <string.h>
 
-#define DEBUG 1//DEBUG_NONE
+#define DEBUG DEBUG_NONE
 
 #include "net/ip/uip-debug.h"
 #include "net/mac/csma.h"
@@ -294,7 +294,6 @@ dio_input(void)
   int i;
   int len;
   uip_ipaddr_t from;
-  uip_ds6_nbr_t *nbr;	//GUOGE
 
   memset(&dio, 0, sizeof(dio));
 
@@ -311,7 +310,7 @@ dio_input(void)
   uip_ipaddr_copy(&from, &UIP_IP_BUF->srcipaddr);
 
   /* DAG Information Object */
-  PRINTF("RPL: Received a DIO from ");
+  PRINTF("GUOGE--RPL: Received a DIO from ");
   PRINT6ADDR(&from);
   PRINTF("\n");
 
@@ -468,11 +467,8 @@ dio_input(void)
 		RPL_STAT(rpl_stats.malformed_msgs++);
         goto discard;
       }
-
-	  if ((nbr = uip_ds6_nbr_lookup(&from)) != NULL) {
-		nbr->buff_util = buffer[i + 2];
-        PRINTF("GUOGE--RPL: received a neighbor's buffer info %u\n", nbr->buff_util);
-	  }
+	  dio.gg_buffer_occupancy = buffer[i + 2];
+      printf("GUOGE--RPL: received a neighbor's buffer info %u%%\n", dio.gg_buffer_occupancy);
 	  break;
 
 	default:
@@ -621,13 +617,12 @@ dio_output(rpl_instance_t *instance, uip_ipaddr_t *uc_addr)
 
   //GUOGE
   //when the node has a preferred parent, it broadcasts the buffer utilization
-  if (dag->preferred_parent != NULL) {
+  if ( (dag->preferred_parent != NULL)) { //(uc_addr == NULL) &&
 	buffer[pos++] = RPL_OPTION_BUFF_INFO;
-    buffer[pos++] = 1; 
-	int temp;
-	temp = gg_get_buff_ocp_pref_parent(rpl_get_parent_lladdr(dag->preferred_parent));
-    buffer[pos++] = temp;
-	printf("GUOGE--RPL: sending a neighbor's buffer info %d\n", temp);
+    buffer[pos++] = 1;
+    buffer[pos++] = dag->gg_buffer_occupancy;
+	printf("GUOGE--RPL: sending my buffer of pre_parent %d%%\n", 
+			dag->gg_buffer_occupancy);
   }
 
 #if RPL_LEAF_ONLY

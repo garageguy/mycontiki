@@ -49,7 +49,7 @@
 #include "collect-common.h"
 #include "collect-view.h"
 
-#define DEBUG 0 //DEBUG_PRINT
+#define DEBUG DEBUG_PRINT
 #include "net/ip/uip-debug.h"
 
 #define UIP_IP_BUF   ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
@@ -58,6 +58,8 @@
 #define UDP_SERVER_PORT 5688
 
 static struct uip_udp_conn *server_conn;
+static	uint32_t average_delay[NODES_NUM+1];
+static	uint16_t received_packets_num[NODES_NUM+1];
 
 PROCESS(udp_server_process, "UDP server process");
 AUTOSTART_PROCESSES(&udp_server_process,&collect_common_process);
@@ -93,6 +95,45 @@ collect_common_net_init(void)
 }
 /*---------------------------------------------------------------------------*/
 static void
+gg_collect_common_recv(const linkaddr_t *originator, uint8_t seqno, uint8_t hops,
+                    uint8_t *payload, uint16_t payload_len)
+{
+  uint16_t data;
+  uint32_t energy_data;
+  int i;
+	uint16_t time_delay, node_id;
+
+
+	memcpy(&data, payload, sizeof(data));
+	payload += sizeof(data);
+	time_delay = clock_seconds() - data;
+	node_id = originator->u8[0] + (originator->u8[1] << 8);
+	average_delay[node_id] += time_delay;
+	received_packets_num[node_id]++;
+	printf("GUOGE--message from %u, delay %u, total %u, energy consumption ",
+         node_id, time_delay, received_packets_num[node_id]);
+	
+	for (i=1; i<=4; i++) {
+		memcpy(&energy_data, payload, sizeof(energy_data));
+		printf("%lu ", energy_data);
+		payload += sizeof(energy_data);
+	}
+	printf("\n");
+ 
+}
+
+void 
+print_average_delay_of_nodes(void){
+	int i;
+	
+	printf("GUOGE--average delay \n");
+	for (i=1; i<=NODES_NUM; i++){
+		printf("GUOGE--node %u: %lu\n", 
+			i, average_delay[i] / received_packets_num[i]);
+	}
+}
+
+static void
 tcpip_handler(void)
 {
   uint8_t *appdata;
@@ -106,8 +147,8 @@ tcpip_handler(void)
     sender.u8[1] = UIP_IP_BUF->srcipaddr.u8[14];
     seqno = *appdata;
     hops = uip_ds6_if.cur_hop_limit - UIP_IP_BUF->ttl + 1;
-    collect_common_recv(&sender, seqno, hops,
-                        appdata + 2, uip_datalen() - 2);
+    gg_collect_common_recv(&sender, seqno, hops,
+        appdata, uip_datalen()); // appdata + 2, uip_datalen() - 2);
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -173,7 +214,7 @@ PROCESS_THREAD(udp_server_process, ev, data)
   PRINT6ADDR(&server_conn->ripaddr);
   PRINTF(" local/remote port %u/%u\n", UIP_HTONS(server_conn->lport),
          UIP_HTONS(server_conn->rport));
-
+  
   while(1) {
     PROCESS_YIELD();
     if(ev == tcpip_event) {

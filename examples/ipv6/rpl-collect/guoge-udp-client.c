@@ -97,69 +97,6 @@ tcpip_handler(void)
 void
 collect_common_send(void)
 {
-  static uint8_t seqno;
-  struct {
-    uint8_t seqno;
-    uint8_t for_alignment;
-    struct collect_view_data_msg msg;
-  } msg;
-  /* struct collect_neighbor *n; */
-  uint16_t parent_etx;
-  uint16_t rtmetric;
-  uint16_t num_neighbors;
-  uint16_t beacon_interval;
-  rpl_parent_t *preferred_parent;
-  linkaddr_t parent;
-  rpl_dag_t *dag;
-
-  if(client_conn == NULL) {
-    /* Not setup yet */
-    return;
-  }
-  memset(&msg, 0, sizeof(msg));
-  seqno++;
-  if(seqno == 0) {
-    /* Wrap to 128 to identify restarts */
-    seqno = 128;
-  }
-  msg.seqno = seqno;
-
-  linkaddr_copy(&parent, &linkaddr_null);
-  parent_etx = 0;
-
-  /* Let's suppose we have only one instance */
-  dag = rpl_get_any_dag();
-  if (dag == NULL ) {
-    rtmetric = 0;
-    beacon_interval = 0;
-    num_neighbors = 0;
-	return;
-  } else {
-	  
-    preferred_parent = dag->preferred_parent;
-    if(preferred_parent != NULL) {
-      uip_ds6_nbr_t *nbr;
-      nbr = uip_ds6_nbr_lookup(rpl_get_parent_ipaddr(preferred_parent));
-      if(nbr != NULL) {
-        /* Use parts of the IPv6 address as the parent address, in reversed byte order. */
-        parent.u8[LINKADDR_SIZE - 1] = nbr->ipaddr.u8[sizeof(uip_ipaddr_t) - 2];
-        parent.u8[LINKADDR_SIZE - 2] = nbr->ipaddr.u8[sizeof(uip_ipaddr_t) - 1];
-        parent_etx = rpl_get_parent_rank((uip_lladdr_t *) uip_ds6_nbr_get_ll(nbr)) / 2;
-      }
-    }
-    rtmetric = dag->rank;
-    beacon_interval = (uint16_t) ((2L << dag->instance->dio_intcurrent) / 1000);
-    num_neighbors = uip_ds6_nbr_num();
-  } 
-  
-  /* num_neighbors = collect_neighbor_list_num(&tc.neighbor_list); */
-  collect_view_construct_message(&msg.msg, &parent,
-                                 parent_etx, rtmetric,
-                                 num_neighbors, beacon_interval);
-
-  uip_udp_packet_sendto(client_conn, &msg, sizeof(msg),
-                        &server_ipaddr, UIP_HTONS(UDP_SERVER_PORT));
-  gg_num_udp_sent++;
  
 }
 /*---------------------------------------------------------------------------*/
@@ -174,10 +111,6 @@ collect_common_net_init(void)
   serial_line_init();
 }
 /*---------------------------------------------------------------------------*/
-void 
-print_average_delay_of_nodes(void){
-}
-
 static void
 print_local_addresses(void)
 {

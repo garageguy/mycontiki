@@ -53,7 +53,7 @@
 
 static struct uip_udp_conn *client_conn;
 static uip_ipaddr_t server_ipaddr;
-
+static uint8_t the_first_sending = 1;
 /*---------------------------------------------------------------------------*/
 PROCESS(udp_client_process, "UDP client process");
 AUTOSTART_PROCESSES(&udp_client_process, &collect_common_process);
@@ -111,6 +111,8 @@ collect_common_send(void)
   rpl_parent_t *preferred_parent;
   linkaddr_t parent;
   rpl_dag_t *dag;
+  struct gg_collect_msg gg_msg;
+
 
   if(client_conn == NULL) {
     /* Not setup yet */
@@ -135,8 +137,12 @@ collect_common_send(void)
     num_neighbors = 0;
 	return;
   } else {
-	  
-    preferred_parent = dag->preferred_parent;
+	if (the_first_sending) {
+		printf("GUOGE--first packet is sent on %lu\n", clock_seconds());
+		the_first_sending = 0;
+	}
+	//return;
+	preferred_parent = dag->preferred_parent;
     if(preferred_parent != NULL) {
       uip_ds6_nbr_t *nbr;
       nbr = uip_ds6_nbr_lookup(rpl_get_parent_ipaddr(preferred_parent));
@@ -153,11 +159,19 @@ collect_common_send(void)
   } 
   
   /* num_neighbors = collect_neighbor_list_num(&tc.neighbor_list); */
-  collect_view_construct_message(&msg.msg, &parent,
+/*  collect_view_construct_message(&msg.msg, &parent,
                                  parent_etx, rtmetric,
                                  num_neighbors, beacon_interval);
+*/
 
-  uip_udp_packet_sendto(client_conn, &msg, sizeof(msg),
+  memset(&gg_msg, 0, sizeof(gg_msg));
+  gg_collect_view_construct_message(&gg_msg);
+
+
+	printf("GUOGE--send %u %lu %lu %lu %lu\n", gg_msg.send_time, gg_msg.cpu,
+		gg_msg.lpm, gg_msg.transmit, gg_msg.listen);
+		
+  uip_udp_packet_sendto(client_conn, &gg_msg, sizeof(msg),
                         &server_ipaddr, UIP_HTONS(UDP_SERVER_PORT));
   gg_num_udp_sent++;
  
@@ -212,6 +226,8 @@ set_global_address(void)
   uip_ip6addr(&server_ipaddr, UIP_DS6_DEFAULT_PREFIX, 0, 0, 0, 0, 0, 0, 1);
 
 }
+
+
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(udp_client_process, ev, data)
 {
@@ -235,10 +251,10 @@ PROCESS_THREAD(udp_client_process, ev, data)
         UIP_HTONS(client_conn->lport), UIP_HTONS(client_conn->rport));
 
   while(1) {
-    PROCESS_YIELD();
     if(ev == tcpip_event) {
       tcpip_handler();
     }
+    PROCESS_YIELD();
   }
 
   PROCESS_END();

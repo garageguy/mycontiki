@@ -303,6 +303,8 @@ struct rpl_dio {
   rpl_prefix_t destination_prefix;
   rpl_prefix_t prefix_info;
   struct rpl_metric_container mc;
+  //GUOGE
+   uint8_t gg_buffer_occupancy;  
 };
 typedef struct rpl_dio rpl_dio_t;
 
@@ -403,4 +405,5 @@ rpl_instance_t *rpl_get_default_instance(void);
 
 //GUOGE
 rpl_parent_t *gg_select_load_balacing_parent(rpl_dag_t *);
+void gg_set_checking_buff_timer();
 #endif /* RPL_PRIVATE_H */
