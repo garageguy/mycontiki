@@ -46,14 +46,6 @@
 
 #include "net/linkaddr.h"
 
-//GUOGE 
-extern uint32_t gg_num_total_sent;
-extern uint32_t gg_num_udp_sent;
-extern uint32_t gg_num_successfully_transmitted;
-extern uint32_t gg_num_dropped_buffer_overflow;
-extern uint32_t gg_num_dropped_channel_loss;
-extern uint32_t gg_max_num_neighbour_queue;	
-
 void clear_queues();
 uint8_t gg_get_buff_ocp_pref_parent(const linkaddr_t *addr);
 

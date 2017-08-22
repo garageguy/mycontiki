@@ -665,14 +665,15 @@ tcpip_ipv6_output(void)
     }
 
     /* End of next hop determination */
-
+	gg_num_total_sent++;
+	
 	//GUOGE--discern whether it's destinated to the preferred parent
+#ifdef USE_MULTIPATH_ALG
 	{
 	  //rpl_instance_t *instance;
 	  rpl_dag_t *dag;
-	  rpl_parent_t *p_parent, *s_parent;
-	  
-	  gg_num_total_sent++;
+	  rpl_parent_t *p_parent, *s_parent;	  
+
 	  //instance = rpl_get_default_instance();
 	  dag = rpl_get_any_dag();
 	  p_parent = dag->preferred_parent;
@@ -697,7 +698,8 @@ tcpip_ipv6_output(void)
 			}			
 		}
     }
-		    
+#endif
+
     nbr = uip_ds6_nbr_lookup(nexthop);
     if(nbr == NULL) {
 #if UIP_ND6_SEND_NA

@@ -47,9 +47,13 @@ AUTOSTART_PROCESSES(&hello_world_process);
 PROCESS_THREAD(hello_world_process, ev, data)
 {
   PROCESS_BEGIN();
-
+      rtimer_clock_t wt;
   printf("Hello, world %lu %lu\n", clock_time(), clock_seconds());
   
+         wt = RTIMER_NOW();
+        while(RTIMER_CLOCK_LT(RTIMER_NOW(), wt + RTIMER_ARCH_SECOND)) { }
+  printf("1 second later %lu %lu\n", clock_time(), clock_seconds());
+ 
   PROCESS_END();
 }
 /*---------------------------------------------------------------------------*/

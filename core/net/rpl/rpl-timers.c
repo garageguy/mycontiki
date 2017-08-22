@@ -71,7 +71,9 @@ clock_time_t RPL_PROBING_DELAY_FUNC(rpl_dag_t *dag);
 /*---------------------------------------------------------------------------*/
 static struct ctimer periodic_timer;
 //GUOGE
+#ifdef USE_MULTIPATH_ALG
 static struct ctimer checking_buff_timer;
+#endif
 
 static void handle_periodic_timer(void *ptr);
 static void new_dio_interval(rpl_instance_t *instance);
@@ -179,7 +181,7 @@ handle_dio_timer(void *ptr)
   }
 
   if(instance->dio_send) {
-      printf("GUOGE--RPL: DIO transmission (counter:%d;redun:%d)\n",
+      PRINTF("RPL: DIO transmission (counter:%d;redun:%d)\n",
              instance->dio_counter, instance->dio_redundancy);    /* send DIO if counter is less than desired redundancy */
     if(instance->dio_redundancy != 0 && instance->dio_counter < instance->dio_redundancy) {
 #if RPL_CONF_STATS
@@ -503,14 +505,13 @@ rpl_schedule_probing(rpl_instance_t *instance)
 #endif /* RPL_WITH_PROBING */
 /*---------------------------------------------------------------------------*/
 //GUOGE--set the timer for checking average buffer occupancy
+#ifdef USE_MULTIPATH_ALG
 static void
 gg_handle_checking_buff_timer(void *ptr)
 {
   rpl_dag_t *dag;
   rpl_parent_t *p;
   uint16_t buff_occp;
-
-  
 	  
   if ( (gg_num_sentto_preferred_parent != 0) && (gg_num_total_buffer != 0) ){
 	  buff_occp = gg_num_total_buffer  * 100 / gg_num_sentto_preferred_parent / QUEUEBUF_NUM;
@@ -554,7 +555,7 @@ gg_handle_checking_buff_timer(void *ptr)
 
 void 
 gg_set_checking_buff_timer(){
-  ctimer_set(&checking_buff_timer, RPL_CHECKING_BUFF_INTERVAL, gg_handle_checking_buff_timer, NULL);
+  ctimer_set(&checking_buff_timer, GG_RPL_CHECKING_BUFF_INTERVAL, gg_handle_checking_buff_timer, NULL);
 }
-
+#endif
 /** @}*/

@@ -310,7 +310,7 @@ dio_input(void)
   uip_ipaddr_copy(&from, &UIP_IP_BUF->srcipaddr);
 
   /* DAG Information Object */
-  PRINTF("GUOGE--RPL: Received a DIO from ");
+  PRINTF("RPL: Received a DIO from ");
   PRINT6ADDR(&from);
   PRINTF("\n");
 
@@ -460,6 +460,7 @@ dio_input(void)
       break;
 	  
 	//GUOGE
+#ifdef USE_MULTIPATH_ALG
 	case RPL_OPTION_BUFF_INFO:
 	  //when the node has a preferred parent, it broadcasts the buffer utilization
 	  if(len != 3) {		// 1 + 2
@@ -470,6 +471,7 @@ dio_input(void)
 	  dio.gg_buffer_occupancy = buffer[i + 2];
       printf("GUOGE--RPL: received a neighbor's buffer info %u%%\n", dio.gg_buffer_occupancy);
 	  break;
+#endif
 
 	default:
       PRINTF("RPL: Unsupported suboption type in DIO: %u\n",
@@ -616,6 +618,7 @@ dio_output(rpl_instance_t *instance, uip_ipaddr_t *uc_addr)
   }
 
   //GUOGE
+#ifdef USE_MULTIPATH_ALG
   //when the node has a preferred parent, it broadcasts the buffer utilization
   if ( (dag->preferred_parent != NULL)) { //(uc_addr == NULL) &&
 	buffer[pos++] = RPL_OPTION_BUFF_INFO;
@@ -624,6 +627,7 @@ dio_output(rpl_instance_t *instance, uip_ipaddr_t *uc_addr)
 	printf("GUOGE--RPL: sending my buffer of pre_parent %d%%\n", 
 			dag->gg_buffer_occupancy);
   }
+#endif
 
 #if RPL_LEAF_ONLY
 #if (DEBUG) & DEBUG_PRINT

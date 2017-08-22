@@ -102,7 +102,7 @@ rpl_print_neighbor_list(void)
         default_instance->mop, default_instance->of->ocp, curr_rank, curr_dio_interval, uip_ds6_nbr_num());
     while(p != NULL) {
       const struct link_stats *stats = rpl_get_parent_link_stats(p);
-      printf("RPL: nbr %3u %5u, %5u => %5u -- %2u %c%c%c (last tx %u min ago), BO:%u\n",
+      printf("RPL: nbr %3u %5u, %5u => %5u -- %2u %c%c%c (last tx %u min ago)",
           rpl_get_parent_ipaddr(p)->u8[15],
           p->rank,
           rpl_get_parent_link_metric(p),
@@ -111,10 +111,15 @@ rpl_print_neighbor_list(void)
           link_stats_is_fresh(stats) ? 'f' : ' ',
           p == default_instance->current_dag->preferred_parent ? 'p' : ' ',
           p == default_instance->current_dag->gg_suboptimal_parent ? 's' : ' ',
-          (unsigned)((clock_now - stats->last_tx_time) / (60 * CLOCK_SECOND)),
-          p->gg_buffer_occupancy
+          (unsigned)((clock_now - stats->last_tx_time) / (60 * CLOCK_SECOND))
       );
-      p = nbr_table_next(rpl_parents, p);
+//GUOGE
+#ifdef USE_MULTIPATH_ALG
+	  printf(" BO:%u", p->gg_buffer_occupancy);
+#endif
+	  printf("\n");
+
+	  p = nbr_table_next(rpl_parents, p);
     }
     printf("RPL: end of list\n");
   }
@@ -1582,9 +1587,12 @@ rpl_process_dio(uip_ipaddr_t *from, rpl_dio_t *dio)
     }
   }
   p->rank = dio->rank;
-  //GUOGE
+  
+//GUOGE
+#ifdef USE_MULTIPATH_ALG
   p->gg_buffer_occupancy = dio->gg_buffer_occupancy;
   printf("GUOGE--set the buff occp of the parent:%u\n",dio->gg_buffer_occupancy);
+#endif
 
   if(dio->rank == INFINITE_RANK && p == dag->preferred_parent) {
     /* Our preferred parent advertised an infinite rank, reset DIO timer */
@@ -1625,6 +1633,7 @@ rpl_process_dio(uip_ipaddr_t *from, rpl_dio_t *dio)
 
 }
 /*---------------------------------------------------------------------------*/
+#ifdef USE_MULTIPATH_ALG
 rpl_parent_t *
 gg_select_load_balacing_parent(rpl_dag_t *dag)
 {
@@ -1651,4 +1660,5 @@ gg_select_load_balacing_parent(rpl_dag_t *dag)
 
   return suboptimal;
 }
+#endif
 /** @} */

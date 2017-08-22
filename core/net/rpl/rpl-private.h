@@ -404,6 +404,9 @@ rpl_instance_t *rpl_get_default_instance(void);
 
 
 //GUOGE
+#ifdef USE_MULTIPATH_ALG
 rpl_parent_t *gg_select_load_balacing_parent(rpl_dag_t *);
 void gg_set_checking_buff_timer();
+#endif
+
 #endif /* RPL_PRIVATE_H */

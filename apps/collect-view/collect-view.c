@@ -49,6 +49,7 @@ uint32_t   gg_total_cpu;
 uint32_t   gg_total_lpm;
 uint32_t   gg_total_transmit;
 uint32_t   gg_total_listen;
+uint32_t   gg_total_energy;
 /*---------------------------------------------------------------------------*/
 void
 collect_view_construct_message(struct collect_view_data_msg *msg,
@@ -114,7 +115,7 @@ gg_collect_view_construct_message(struct gg_collect_msg *msg)
   unsigned long cpu, lpm, transmit, listen;
 
 
-  msg->send_time = clock_seconds();
+  msg->send_time = clock_time();
 
   energest_flush();
 
@@ -132,7 +133,7 @@ gg_collect_view_construct_message(struct gg_collect_msg *msg)
   gg_total_lpm += lpm;
   gg_total_transmit += transmit;
   gg_total_listen += listen;
-
+  
   last_cpu = energest_type_time(ENERGEST_TYPE_CPU);
   last_lpm = energest_type_time(ENERGEST_TYPE_LPM);
   last_transmit = energest_type_time(ENERGEST_TYPE_TRANSMIT);

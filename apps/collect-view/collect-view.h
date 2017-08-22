@@ -23,7 +23,7 @@ struct collect_view_data_msg {
 };
 
   struct gg_collect_msg {
-	  uint16_t send_time;
+	  clock_time_t send_time;
 	  uint32_t cpu;
 	  uint32_t lpm;
 	  uint32_t transmit;
@@ -34,6 +34,7 @@ extern  uint32_t   gg_total_cpu;
 extern  uint32_t   gg_total_lpm;
 extern  uint32_t   gg_total_transmit;
 extern  uint32_t   gg_total_listen;
+extern  uint32_t   gg_total_energy;
 
 void collect_view_construct_message(struct collect_view_data_msg *msg,
                                     const linkaddr_t *parent,

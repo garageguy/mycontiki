@@ -1,0 +1,18 @@
+#rm finalresults
+for ((j=1;j<=2;j++))
+do
+	for ((i=2;i<=$1;i++))
+	do
+	  pn=`grep "GUOGE--stats: $j" $2 | grep ":ID-$i:" | awk '{print $3}'`
+	  bo=`grep "GUOGE--stats: $j" $2 | grep ":ID-$i:" | awk '{print $4}'`
+	  cl=`grep "GUOGE--stats: $j" $2 | grep ":ID-$i:" | awk '{print $5}'`
+	  e=`grep "GUOGE--stats: $j" $2 | grep ":ID-$i:" | awk '{print $6}'`
+	  ((sum_pn=sum_pn + pn))
+	  ((sum_bo=sum_bo + bo))
+	  ((sum_cl=sum_cl + cl))
+	  ((sum_e=sum_e + e))
+	  #echo $i: $pn, $bo, $cl, $e
+	done
+	((sum_e=sum_e / 3600))
+	echo $j:$sum_pn, $sum_bo, $sum_cl, $sum_e
+done

@@ -78,9 +78,20 @@
 #define RPL_CONF_MOP RPL_MOP_NON_STORING /* Mode of operation*/
 #endif /* WITH_NON_STORING */
 
-
 //guoge
+//#define USE_MULTIPATH_ALG
 #define CSMA_CONF_MAX_NEIGHBOR_QUEUES	16
+#define	GG_RPL_CHECKING_BUFF_INTERVAL	5 * CLOCK_SECOND
 #define	GG_BUFFER_OCCUPANCY_THRESHOLD	50
-#define NODES_NUM						31
+#define GG_NODES_NUM					31
+
+uint32_t gg_num_total_sent;
+uint32_t gg_num_udp_sent;
+uint32_t gg_num_successfully_transmitted;
+uint32_t gg_num_dropped_buffer_overflow;
+uint32_t gg_num_dropped_channel_loss;
+uint32_t gg_max_num_neighbour_queue;		
+uint32_t gg_total_delay;
+uint32_t gg_received_packets_num;
+
 #endif /* PROJECT_CONF_H_ */

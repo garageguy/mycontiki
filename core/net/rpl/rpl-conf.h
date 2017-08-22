@@ -340,6 +340,6 @@
 
 
 //GUOGE
-#define	RPL_CHECKING_BUFF_INTERVAL		5 * CLOCK_SECOND
+
 
 #endif /* RPL_CONF_H */

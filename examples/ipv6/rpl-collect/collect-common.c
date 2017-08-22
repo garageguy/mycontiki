@@ -52,13 +52,13 @@ static unsigned long time_offset;
 static int send_active = 1;
 
 #ifndef GGPERIOD
-#define GGPERIOD 60
+#define GGPERIOD 100
 #endif
-#define DAG_CONSTRUCTION_DURATION 15
+#define DAG_CONSTRUCTION_DURATION 50
 #define CLEANUP_DURATION 10
-#define ROUNDS_NUM	15
-#define CBR			3 
 
+#define CBR			3
+#define ROUNDS_NUM	2
 
 /*---------------------------------------------------------------------------*/
 PROCESS(collect_common_process, "collect common process");
@@ -86,7 +86,6 @@ collect_common_set_send_active(int active)
   send_active = active;
 }
 /*---------------------------------------------------------------------------*/
-
 void
 collect_common_recv(const linkaddr_t *originator, uint8_t seqno, uint8_t hops,
                     uint8_t *payload, uint16_t payload_len)
@@ -115,9 +114,10 @@ collect_common_recv(const linkaddr_t *originator, uint8_t seqno, uint8_t hops,
 PROCESS_THREAD(collect_common_process, ev, data)
 {
   static struct etimer period_timer, wait_timer, duration_timer, cleanup_timer;
-  static uint16_t round = CBR, cleanup_round=1; 
+  static uint16_t round, cleanup_round=1; 
   static uint32_t gg_sending_interval=0, gg_saved_num_total_sent=0;
-  
+  uint32_t gg_cpu_e, gg_lpm_e, gg_tx_e, gg_rx_e, gg_total_e;  
+
   PROCESS_BEGIN();
 
   collect_common_net_init();
@@ -125,7 +125,7 @@ PROCESS_THREAD(collect_common_process, ev, data)
   etimer_set(&period_timer, DAG_CONSTRUCTION_DURATION * CLOCK_SECOND );
   etimer_set(&duration_timer, CLOCK_SECOND * GGPERIOD);
   while(round < ROUNDS_NUM) {
-  	gg_sending_interval = (CLOCK_SECOND/8)<<round;
+  	gg_sending_interval = (CLOCK_SECOND/8)<<(CBR);
     PROCESS_WAIT_EVENT();
     if(ev == serial_line_event_message) {
       char *line;
@@ -178,25 +178,34 @@ PROCESS_THREAD(collect_common_process, ev, data)
           collect_common_send();
         }
       } else if (data == &duration_timer){
-            printf("GUOGE--%u %lu %lu %lu %lu %lu %lu\n", 
-				round+1,
+	  
+      		gg_cpu_e = gg_total_cpu / 32768* 1800L ;
+			gg_lpm_e = gg_total_lpm / 32768* 5L ;
+			gg_tx_e = gg_total_transmit / 32768* 19500L  ;
+			gg_rx_e = gg_total_listen / 32768* 21800L  ;
+			gg_total_e = gg_cpu_e + gg_lpm_e + gg_tx_e + gg_rx_e;
+            printf("GUOGE--stats: %u %lu %lu %lu %lu\n", 
+				round + 1,
 		  		//gg_num_total_sent,
 		  		gg_num_udp_sent,
-		  		gg_num_successfully_transmitted,
+		  		//gg_num_successfully_transmitted,
 		  		gg_num_dropped_buffer_overflow, 
 				gg_num_dropped_channel_loss,
-				gg_max_num_neighbour_queue,
-				gg_sending_interval);  
-			printf("GUOGE--energy consumption, CPU:%lu, LPM:%lu, TX:%lu, LI:%lu\n",
-				gg_total_cpu, gg_total_lpm, gg_total_transmit, gg_total_listen);
+				//gg_max_num_neighbour_queue,
+				//gg_sending_interval
+				//gg_total_cpu, gg_total_lpm, gg_total_transmit, gg_total_listen,
+				//gg_cpu_e, gg_lpm_e, gg_tx_e, gg_rx_e, 
+				gg_total_e
+				);  
+			//printf("GUOGE--energy consumption, CPU:%lu, LPM:%lu, TX:%lu, LI:%lu\n",				gg_total_cpu, gg_total_lpm, gg_total_transmit, gg_total_listen);
 			print_average_delay_of_nodes();
 
 			gg_saved_num_total_sent = gg_num_total_sent;
 			clear_queues();
 			etimer_set(&cleanup_timer, CLOCK_SECOND * CLEANUP_DURATION);
       } else if (data == &cleanup_timer){
-      	printf("GUOGE--cleanup round:%u, num variance:%lu\n", 
-			cleanup_round, gg_num_total_sent - gg_saved_num_total_sent);
+//      	printf("GUOGE--cleanup round:%u, num variance:%lu\n", 
+//			cleanup_round, gg_num_total_sent - gg_saved_num_total_sent);
 /*		if (gg_num_total_sent - gg_saved_num_total_sent > 10){
 			cleanup_round++;
 			clear_queues();
@@ -211,10 +220,12 @@ PROCESS_THREAD(collect_common_process, ev, data)
 	  	gg_num_dropped_buffer_overflow=0;
 		gg_num_dropped_channel_loss=0;
 		gg_max_num_neighbour_queue=0;
+		gg_total_cpu = gg_total_lpm = gg_total_transmit = gg_total_listen = 0;
+		gg_total_delay = gg_received_packets_num = 0;
 		round++;
 		cleanup_round = 1;
-		etimer_set(&period_timer, (CLOCK_SECOND/8)<<round);
-		etimer_set(&duration_timer, CLOCK_SECOND * GGPERIOD);
+		etimer_set(&period_timer, (CLOCK_SECOND/8)<<(CBR));
+		etimer_set(&duration_timer, (CLOCK_SECOND * GGPERIOD)<<round);
       }
     }
   }

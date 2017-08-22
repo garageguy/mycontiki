@@ -132,14 +132,6 @@ LIST(neighbor_list);
 static void packet_sent(void *ptr, int status, int num_transmissions);
 static void transmit_packet_list(void *ptr);
 
-//GUOGE 
-uint32_t gg_num_total_sent=0;
-uint32_t gg_num_udp_sent=0;
-uint32_t gg_num_successfully_transmitted=0;
-uint32_t gg_num_dropped_buffer_overflow=0;
-uint32_t gg_num_dropped_channel_loss=0;
-uint32_t gg_max_num_neighbour_queue=0;		
-
 /*---------------------------------------------------------------------------*/
 static struct neighbor_queue *
 neighbor_queue_from_addr(const linkaddr_t *addr)
@@ -345,9 +337,7 @@ clear_queues()
 	list_remove(neighbor_list, n);
   	memb_free(&neighbor_memb, n); 
 	n = m;
-  }  	
-  //printf("GUOGE--neigh queue contains %d packets, cleaned!\n", count);
-
+  } 
   return; 
 }
 /*---------------------------------------------------------------------------*/
@@ -553,6 +543,7 @@ init(void)
   memb_init(&neighbor_memb);
 }
 //GUOGE
+#ifdef USE_MULTIPATH_ALG
 uint8_t
 gg_get_buff_ocp_pref_parent(const linkaddr_t *addr){
 	struct neighbor_queue *n = neighbor_queue_from_addr(addr);
@@ -564,6 +555,7 @@ gg_get_buff_ocp_pref_parent(const linkaddr_t *addr){
 	}
 	
 }
+#endif
 /*---------------------------------------------------------------------------*/
 const struct mac_driver csma_driver = {
   "CSMA",
