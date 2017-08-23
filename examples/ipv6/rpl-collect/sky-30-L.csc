@@ -8,7 +8,7 @@
   <project EXPORT="discard">[APPS_DIR]/powertracker</project>
   <simulation>
     <title>My simulation</title>
-    <randomseed>123456</randomseed>
+    <randomseed>generated</randomseed>
     <motedelay_us>1000000</motedelay_us>
     <radiomedium>
       org.contikios.cooja.radiomediums.UDGM
@@ -728,7 +728,7 @@
  *  Mote mote, int id, String msg
  */
 
-TIMEOUT(400000);
+TIMEOUT(310000);
 
 while (true) {
   log.log(time + ":ID-" + id + ":" + msg + "\n");

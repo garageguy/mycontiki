@@ -32,6 +32,7 @@
 #include "net/ipv6/uip-ds6.h"
 #include "net/ip/uip-udp-packet.h"
 #include "net/rpl/rpl.h"
+#include "net/rpl/rpl-private.h"
 #include "dev/serial-line.h"
 #if CONTIKI_TARGET_Z1
 #include "dev/uart0.h"
@@ -137,12 +138,16 @@ collect_common_send(void)
     num_neighbors = 0;
 	return;
   } else {
-/*	if (the_first_sending) {
+	if (the_first_sending) {
 		printf("GUOGE--first packet is sent on %lu\n", clock_seconds());
 		the_first_sending = 0;
+		
+#ifdef USE_MULTIPATH_ALG
+	  	gg_set_checking_buff_timer();
+#endif  
+
 	}
-	return;
-*/	
+	
 	preferred_parent = dag->preferred_parent;
     if(preferred_parent != NULL) {
       uip_ds6_nbr_t *nbr;

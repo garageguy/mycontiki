@@ -472,8 +472,7 @@ send_packet(mac_callback_t sent, void *ptr)
               list_add(n->queued_packet_list, q);
             }
 
-            //PRINTF
-            printf("csma: send_packet, queue length %d, free packets %d\n",
+            PRINTF("csma: send_packet, queue length %d, free packets %d\n",
                    list_length(n->queued_packet_list), memb_numfree(&packet_memb));
             /* If q is the first packet in the neighbor's queue, send asap */
             if(list_head(n->queued_packet_list) == q) {

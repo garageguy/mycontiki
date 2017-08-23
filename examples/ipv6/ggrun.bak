@@ -1,0 +1,5 @@
+java -mx2g -jar /home/user/contiki/tools/cooja/dist/cooja.jar  -nogui=$1
+grep "stats" *tlog > filtered
+/home/user/contiki/examples/ipv6/accumulate_packet_energy $2 filtered > results
+grep "delays" *tlog >> results
+cat results

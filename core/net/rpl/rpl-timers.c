@@ -52,7 +52,7 @@
 #include "net/mac/csma.h"
 #include "net/queuebuf.h"
 
-#define DEBUG 1// DEBUG_NONE
+#define DEBUG 1
 #include "net/ip/uip-debug.h"
 
 /* A configurable function called after update of the RPL DIO interval */
@@ -73,6 +73,8 @@ static struct ctimer periodic_timer;
 //GUOGE
 #ifdef USE_MULTIPATH_ALG
 static struct ctimer checking_buff_timer;
+static struct ctimer send_buff_info_timer;
+static uint8_t buffer_info_sending_interval = RPL_DIO_INTERVAL_MIN;
 #endif
 
 static void handle_periodic_timer(void *ptr);
@@ -84,7 +86,7 @@ static uint16_t next_dis;
 /* dio_send_ok is true if the node is ready to send DIOs */
 static uint8_t dio_send_ok;
 
-static uint8_t gg_buffer_recovery_sent;
+static uint8_t gg_buffer_above_threshold_sent, gg_buffer_recovery_sent;
 /*---------------------------------------------------------------------------*/
 static void
 handle_periodic_timer(void *ptr)
@@ -507,6 +509,35 @@ rpl_schedule_probing(rpl_instance_t *instance)
 //GUOGE--set the timer for checking average buffer occupancy
 #ifdef USE_MULTIPATH_ALG
 static void
+gg_handle_sending_buff_info_DIO_timer(void *ptr)
+{
+  	rpl_dag_t *dag = (rpl_dag_t *)ptr;
+	clock_time_t ticks;	
+	
+	if (buffer_info_sending_interval < dag->instance->dio_intcurrent) {
+		dio_output(dag->instance, NULL);
+		ticks = (1UL << buffer_info_sending_interval) * CLOCK_SECOND / 1000 ;
+		printf("GUOGE--next buffer info will be sent after %lu ticks\n", ticks);
+		ctimer_set(&send_buff_info_timer, ticks, 
+	  		gg_handle_sending_buff_info_DIO_timer, dag);
+		buffer_info_sending_interval++ ;
+	}
+}
+
+static void
+gg_start_timer_to_send_buff_info_DIO(rpl_dag_t *dag, uint8_t above)
+{
+	if (above) {
+		buffer_info_sending_interval = RPL_DIO_INTERVAL_MIN; 
+		ctimer_set(&send_buff_info_timer, 0, 
+	  		gg_handle_sending_buff_info_DIO_timer, dag);
+	} else {
+		dio_output(dag->instance, NULL);
+		ctimer_stop(&send_buff_info_timer);		
+	}		
+}
+
+static void
 gg_handle_checking_buff_timer(void *ptr)
 {
   rpl_dag_t *dag;
@@ -519,14 +550,20 @@ gg_handle_checking_buff_timer(void *ptr)
 	  if (dag != NULL) {
 	  	  dag->gg_buffer_occupancy = buff_occp;
 		  if (buff_occp > GG_BUFFER_OCCUPANCY_THRESHOLD) {
-		  	dio_output(dag->instance, NULL);
-			printf("GUOGE--BUFFER THRESHOLD ARE SIGNALED!!!!!\n");
-			gg_buffer_recovery_sent = 0;
-		  } else if (!gg_buffer_recovery_sent){
-		    //send only once about the buffer recovery
-		  	dio_output(dag->instance, NULL);
-			printf("GUOGE--buffer occupancy recover to the normal level\n");
-			gg_buffer_recovery_sent = 1;
+		  	if (!gg_buffer_above_threshold_sent){ 
+				gg_start_timer_to_send_buff_info_DIO(dag, 1);  // 1 represent above
+				gg_buffer_above_threshold_sent = 1;
+				printf("GUOGE--BUFFER ABOVE THE THRESHOLD\n");
+			} 
+			//gg_buffer_recovery_sent = 0;
+		  } else {
+		    //if (!gg_buffer_recovery_sent){
+			    //send only once about the buffer recovery
+				gg_start_timer_to_send_buff_info_DIO(dag, 0);  
+				//gg_buffer_recovery_sent = 1;
+				printf("GUOGE--BUFFER RESTORED\n");
+			//}
+		    gg_buffer_above_threshold_sent = 0;
 		  }
 /*				printf("GUOGE--BO is %u%%, find a suboptimal parent:%3u\n",
 					buff_occp,
@@ -550,12 +587,20 @@ gg_handle_checking_buff_timer(void *ptr)
   gg_num_sentto_preferred_parent = 0;
   gg_num_total_buffer = 0;
   gg_num_dropped_buffer_overflow = 0;
-  ctimer_reset(&checking_buff_timer);
+  ctimer_set(&checking_buff_timer, 
+  	(1UL << RPL_DIO_INTERVAL_MIN) * CLOCK_SECOND / 1000,
+  	gg_handle_checking_buff_timer, NULL);
 }
 
 void 
-gg_set_checking_buff_timer(){
-  ctimer_set(&checking_buff_timer, GG_RPL_CHECKING_BUFF_INTERVAL, gg_handle_checking_buff_timer, NULL);
+gg_set_checking_buff_timer()
+{
+  clock_time_t ticks;
+
+  ticks = (1UL << RPL_DIO_INTERVAL_MIN) * CLOCK_SECOND / 1000;
+  ticks + = ticks * (uint32_t)random_rand() / RANDOM_RAND_MAX;   
+  ctimer_set(&checking_buff_timer, ticks, 
+  		gg_handle_checking_buff_timer, NULL);
 }
 #endif
 /** @}*/

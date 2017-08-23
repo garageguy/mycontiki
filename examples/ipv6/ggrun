@@ -1,0 +1,6 @@
+sed '/TIMEOUT/s/'"$1"'/'"$2"'/' $3 > ggr.csc
+java -mx2g -jar /home/user/contiki/tools/cooja/dist/cooja.jar  -nogui=ggr.csc
+grep "stats" *tlog > filtered
+/home/user/contiki/examples/ipv6/accumulate_packet_energy $4 filtered > results
+grep "delays" *tlog >> results
+cat results

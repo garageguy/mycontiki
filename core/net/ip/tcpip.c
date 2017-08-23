@@ -55,7 +55,7 @@
 
 #include <string.h>
 
-#define DEBUG 0
+#define DEBUG DEBUG_NONE
 #include "net/ip/uip-debug.h"
 
 #if UIP_LOGGING
@@ -563,6 +563,9 @@ tcpip_ipv6_output(void)
   }
 #endif /* UIP_CONF_IPV6_RPL */
 
+  //GUOGE
+	gg_num_total_sent++;
+
   if(!uip_is_addr_mcast(&UIP_IP_BUF->destipaddr)) {
     /* Next hop determination */
 
@@ -665,7 +668,6 @@ tcpip_ipv6_output(void)
     }
 
     /* End of next hop determination */
-	gg_num_total_sent++;
 	
 	//GUOGE--discern whether it's destinated to the preferred parent
 #ifdef USE_MULTIPATH_ALG

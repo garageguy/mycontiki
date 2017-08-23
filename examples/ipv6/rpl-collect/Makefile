@@ -1,4 +1,4 @@
-CONTIKI = ../../..
+CONTIKI = /home/user/contiki
 APPS = powertrace collect-view
 CONTIKI_PROJECT = udp-sender udp-sink guoge-udp-sender
 PROJECT_SOURCEFILES += collect-common.c

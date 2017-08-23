@@ -52,13 +52,13 @@ static unsigned long time_offset;
 static int send_active = 1;
 
 #ifndef GGPERIOD
-#define GGPERIOD 100
+#define GGPERIOD 150
 #endif
 #define DAG_CONSTRUCTION_DURATION 50
 #define CLEANUP_DURATION 10
 
 #define CBR			3
-#define ROUNDS_NUM	2
+#define ROUNDS_NUM	1
 
 /*---------------------------------------------------------------------------*/
 PROCESS(collect_common_process, "collect common process");
@@ -184,9 +184,9 @@ PROCESS_THREAD(collect_common_process, ev, data)
 			gg_tx_e = gg_total_transmit / 32768* 19500L  ;
 			gg_rx_e = gg_total_listen / 32768* 21800L  ;
 			gg_total_e = gg_cpu_e + gg_lpm_e + gg_tx_e + gg_rx_e;
-            printf("GUOGE--stats: %u %lu %lu %lu %lu\n", 
+            printf("GUOGE--stats: %u %lu %lu %lu %lu %lu\n", 
 				round + 1,
-		  		//gg_num_total_sent,
+		  		gg_num_total_sent,
 		  		gg_num_udp_sent,
 		  		//gg_num_successfully_transmitted,
 		  		gg_num_dropped_buffer_overflow, 
